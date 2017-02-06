@@ -2,8 +2,8 @@
   "version": "1.0.0-*",
 
     "dependencies": {
-        "FlubuCore": "1.0.289",
-        "NETStandard.Library": "1.6.0"
+        "FlubuCore": "1.1.0",
+        "NETStandard.Library": "1.6.1"
     },
 
   "frameworks": {
