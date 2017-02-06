@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FlubuCore" Version="1.1.0" />
+  </ItemGroup>
+    <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-flubu" Version="1.1.0" />
+  </ItemGroup>
+</Project>
