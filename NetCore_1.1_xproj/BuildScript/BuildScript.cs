@@ -17,10 +17,26 @@ public class MyBuildScript : DefaultBuildScript
 
     protected override void ConfigureTargets(ITaskContext context)
     {
+        context.CreateTarget("Fetch.FlubuCore.Version")
+            .Do(UpdateFlubuCoreNugetPackageToLatest);
+
         context
             .CreateTarget("compile")
             .SetDescription("Compiles the VS solution")
             .AddCoreTask(x => x.ExecuteDotnetTask("restore").WithArguments("FlubuExample"))
             .TaskExtensions().DotnetBuild("FlubuExample");
-    } 
+    }
+
+    private void UpdateFlubuCoreNugetPackageToLatest(ITaskContext context)
+    {
+        var FetchVersionTask = context.Tasks().FetchBuildVersionFromFileTask();
+
+        FetchVersionTask.ProjectVersionFileName = @"..\FlubuCore.ProjectVersion.txt";
+        var version = FetchVersionTask.Execute(context);
+        context.Tasks().UpdateJsonFileTask("project.json")
+            .Update(@"tools.dotnet-flubu.version", version.ToString(3))
+            .Update(@"dependencies.FlubuCore", version.ToString(3))
+            .Execute(context);
+
+    }
 }
