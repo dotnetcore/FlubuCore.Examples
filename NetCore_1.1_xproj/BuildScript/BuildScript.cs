@@ -24,7 +24,7 @@ public class MyBuildScript : DefaultBuildScript
             .CreateTarget("compile")
             .SetDescription("Compiles the VS solution")
             .AddCoreTask(x => x.ExecuteDotnetTask("restore").WithArguments("FlubuExample"))
-            .TaskExtensions().DotnetBuild("FlubuExample");
+            .CoreTaskExtensions().DotnetBuild("FlubuExample");
     }
 
     private void UpdateFlubuCoreNugetPackageToLatest(ITaskContext context)
