@@ -16,3 +16,4 @@
 * run build.exe help to see other available build actions.
 
 ### How do I get set up (.net core)? ###
+* todo
