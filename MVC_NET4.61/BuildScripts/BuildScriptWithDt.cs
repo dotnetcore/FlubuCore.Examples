@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using FlubuCore.Context;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
-using FlubuCore.Targeting;
-using FlubuCore.Tasks.Testing;
 
 /// <summary>
 /// In this build script default targets(compile etc are included. 

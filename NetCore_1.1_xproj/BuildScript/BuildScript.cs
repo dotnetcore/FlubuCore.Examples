@@ -31,7 +31,7 @@ public class MyBuildScript : DefaultBuildScript
     {
         var FetchVersionTask = context.Tasks().FetchBuildVersionFromFileTask();
 
-        FetchVersionTask.ProjectVersionFileName = @"..\FlubuCore.ProjectVersion.txt";
+        FetchVersionTask.ProjectVersionFileName(@"..\FlubuCore.ProjectVersion.txt");
         var version = FetchVersionTask.Execute(context);
         context.Tasks().UpdateJsonFileTask("project.json")
             .Update(@"tools.dotnet-flubu.version", version.ToString(3))
