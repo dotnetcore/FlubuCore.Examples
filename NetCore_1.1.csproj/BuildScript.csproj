@@ -1,16 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="BuildScript\bin\**" />
     <Compile Remove="BuildScript\obj\**" />
+    <Compile Remove="FlubuExample.Tests\**" />
     <Compile Remove="FlubuExample\**" />
     <EmbeddedResource Remove="BuildScript\bin\**" />
     <EmbeddedResource Remove="BuildScript\obj\**" />
+    <EmbeddedResource Remove="FlubuExample.Tests\**" />
     <EmbeddedResource Remove="FlubuExample\**" />
     <None Remove="BuildScript\bin\**" />
     <None Remove="BuildScript\obj\**" />
+    <None Remove="FlubuExample.Tests\**" />
     <None Remove="FlubuExample\**" />
   </ItemGroup>
   <ItemGroup>
@@ -22,4 +25,12 @@
     <ItemGroup>
     <DotNetCliToolReference Include="dotnet-flubu" Version="1.2.3" />
   </ItemGroup>
+    <ItemGroup>
+      <Reference Include="xunit.assert">
+        <HintPath>C:\Users\markoz\.nuget\packages\xunit.assert\2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
+      </Reference>
+      <Reference Include="xunit.core">
+        <HintPath>C:\Users\markoz\.nuget\packages\xunit.extensibility.core\2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>

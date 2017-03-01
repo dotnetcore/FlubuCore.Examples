@@ -32,12 +32,13 @@ public class MyBuildScript : DefaultBuildScript
             .CoreTaskExtensions()
             .DotnetPublish("FlubuExample");
 
-        var test = context.CreateTarget("test").AddCoreTask(x => x.Test().WorkingFolder("FlubuExample.Tests"));
+        var test = context.CreateTarget("test")
+            .AddCoreTask(x => x.Test().WorkingFolder("FlubuExample.Tests"));
 
-        //// todo include compile and package into rebuild
+        //// todo include package into rebuild.
         context.CreateTarget("Rebuild")
             .SetAsDefault()
-            .DependsOn(compile);
+            .DependsOn(compile, test);
     }
 
     private void UpdateFlubuCoreNugetPackageToLatest(ITaskContext context)
