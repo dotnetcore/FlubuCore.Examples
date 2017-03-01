@@ -22,6 +22,7 @@ public class MyBuildScript : DefaultBuildScript
 
         context
             .CreateTarget("rebuild")
+            .SetAsDefault()
             .SetDescription("Compiles the VS solution")
             .CoreTaskExtensions()
             .DotnetRestore(x => x.WithArguments("FlubuExample"))
