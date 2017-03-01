@@ -22,3 +22,5 @@ NetCore_1.1_xproj/FlubuExample/bin/
 NetCore_1.1_xproj/FlubuExample/obj/Debug/netcoreapp1.0/dotnet-compile-csc.rsp
 NetCore_1.1_xproj/FlubuExample/obj/
 NetCore_1.1_xproj/.vs/restore.dg
+NetCore_1.1.csproj/FlubuExample.Tests/bin/
+NetCore_1.1.csproj/FlubuExample.Tests/obj/

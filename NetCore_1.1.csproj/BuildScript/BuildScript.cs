@@ -20,11 +20,24 @@ public class MyBuildScript : DefaultBuildScript
         context.CreateTarget("Fetch.FlubuCore.Version")
             .Do(UpdateFlubuCoreNugetPackageToLatest);
 
-        context
+        var compile = context
             .CreateTarget("compile")
             .SetDescription("Compiles the VS solution")
             .AddCoreTask(x => x.ExecuteDotnetTask("restore").WithArguments("FlubuExample"))
-            .CoreTaskExtensions().DotnetBuild("FlubuExample");
+            .CoreTaskExtensions().DotnetBuild("FlubuExample")
+            .BackToTarget();
+
+        var package = context
+            .CreateTarget("Package")
+            .CoreTaskExtensions()
+            .DotnetPublish("FlubuExample");
+
+        var test = context.CreateTarget("test").AddCoreTask(x => x.Test().WorkingFolder("FlubuExample.Tests"));
+
+        //// todo include compile and package into rebuild
+        context.CreateTarget("Rebuild")
+            .SetAsDefault()
+            .DependsOn(compile);
     }
 
     private void UpdateFlubuCoreNugetPackageToLatest(ITaskContext context)
