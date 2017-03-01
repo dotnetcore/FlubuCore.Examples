@@ -23,8 +23,8 @@ public class MyBuildScript : DefaultBuildScript
         var compile = context
             .CreateTarget("compile")
             .SetDescription("Compiles the VS solution")
-            .AddCoreTask(x => x.ExecuteDotnetTask("restore").WithArguments("FlubuExample"))
-            .CoreTaskExtensions().DotnetBuild("FlubuExample")
+            .AddCoreTask(x => x.ExecuteDotnetTask("restore").WithArguments("FlubuExample.sln"))
+            .CoreTaskExtensions().DotnetBuild("FlubuExample.sln")
             .BackToTarget();
 
         var package = context
