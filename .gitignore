@@ -14,3 +14,11 @@ NetCore_1.1.csproj/obj/
 NetCore_1.1_xproj/FlubuExample/project.lock.json
 NetCore_1.1_xproj/project.lock.json
 NetCore_1.1_xproj/BuildScript/project.lock.json
+NetCore_1.1.csproj/bin/
+NetCore_1.1_xproj/output/FlubuExample/Microsoft.Extensions.Configuration.Abstractions.dll
+NetCore_1.1_xproj/output/FlubuExample/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+NetCore_1.1_xproj/output/
+NetCore_1.1_xproj/FlubuExample/bin/
+NetCore_1.1_xproj/FlubuExample/obj/Debug/netcoreapp1.0/dotnet-compile-csc.rsp
+NetCore_1.1_xproj/FlubuExample/obj/
+NetCore_1.1_xproj/.vs/restore.dg

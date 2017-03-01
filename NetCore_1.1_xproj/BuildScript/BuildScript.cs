@@ -21,10 +21,13 @@ public class MyBuildScript : DefaultBuildScript
             .Do(UpdateFlubuCoreNugetPackageToLatest);
 
         context
-            .CreateTarget("compile")
+            .CreateTarget("rebuild")
             .SetDescription("Compiles the VS solution")
-            .AddCoreTask(x => x.ExecuteDotnetTask("restore").WithArguments("FlubuExample"))
-            .CoreTaskExtensions().DotnetBuild("FlubuExample");
+            .CoreTaskExtensions()
+            .DotnetRestore(x => x.WithArguments("FlubuExample"))
+            .DotnetBuild("FlubuExample")
+            .DotnetPublish("FlubuExample")
+            .CreateZipPackageFromProjects("FlubuExample", "netcoreapp1.0", "FlubuExample" );
     }
 
     private void UpdateFlubuCoreNugetPackageToLatest(ITaskContext context)
