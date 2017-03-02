@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Xml;
 using FlubuCore.Context;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
-using FlubuCore.Targeting;
-using FlubuCore.Tasks.Testing;
+//#ref System.Xml.XmlDocument, System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 
 /// <summary>
 /// Flubu build script example for .net. Flubu Default targets for .net are not included. 
@@ -50,7 +51,9 @@ public class BuildScript : DefaultBuildScript
             .DependsOn(loadSolution)
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"));
 
-         session.CreateTarget("abc").AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
+        var runExternalProgramExample = session.CreateTarget("abc").AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
+
+        var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
 
         var package = session.CreateTarget("Package")
             .SetDescription("Packages mvc example for deployment")
@@ -59,16 +62,15 @@ public class BuildScript : DefaultBuildScript
         session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
             .SetAsDefault()
-            .DependsOn(compile, unitTest, package);
+            .DependsOn(compile, unitTest, package, refAssemblyExample);
     }
 
     public static void TargetFetchBuildVersion(ITaskContext context)
     {
         var version = context.Tasks().FetchBuildVersionFromFileTask().Execute(context);
-     
         int svnRevisionNumber = 0; //in real scenario you would fetch revision number from subversion.
         int buildNumber = 0; // in real scenario you would fetch build version from build server.
-        version = new Version(version.Major, version.Minor, buildNumber, svnRevisionNumber);
+        version = new System.Version(version.Major, version.Minor, buildNumber, svnRevisionNumber);
         context.Properties.Set(BuildProps.BuildVersion, version);
     }
 
@@ -87,5 +89,10 @@ public class BuildScript : DefaultBuildScript
             .AddDirectoryToPackage("FlubuExample\\Views", "FlubuExample\\Views", true)
             .ZipPackage("FlubuExample.zip")
             .Execute(context);
+    }
+
+    public void TargetReferenceAssemblyExample(ITaskContext context)
+    {
+        XmlDocument xml = new XmlDocument();
     }
 }
