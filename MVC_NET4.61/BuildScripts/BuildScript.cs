@@ -38,31 +38,41 @@ public class BuildScript : DefaultBuildScript
 
         session.CreateTarget("generate.commonassinfo")
            .SetDescription("Generates common assembly info")
-            .DependsOn(updateVersion)
-           .TaskExtensions().GenerateCommonAssemblyInfo();
+           .DependsOn(updateVersion)
+           .TaskExtensions().GenerateCommonAssemblyInfo().BackToTarget();
 
         var compile = session.CreateTarget("compile")
             .SetDescription("Compiles the solution.")
             .AddTask(x => x.CompileSolutionTask())
             .DependsOn("generate.commonassinfo");
-        
+
         var unitTest = session.CreateTarget("unit.tests")
             .SetDescription("Runs unit tests")
             .DependsOn(loadSolution)
-            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"));
-
+            .AddTaskAsync(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
+            .AddTaskAsync(x => x.NUnitTaskForNunitV3("FlubuExample.Tests2"));
+        
         var runExternalProgramExample = session.CreateTarget("abc").AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
-
-        var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
 
         var package = session.CreateTarget("Package")
             .SetDescription("Packages mvc example for deployment")
             .Do(TargetPackage);
 
-        session.CreateTarget("Rebuild")
+       var rebuild = session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
             .SetAsDefault()
-            .DependsOn(compile, unitTest, package, refAssemblyExample);
+            .DependsOn(compile, unitTest, package);
+
+        var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
+
+        var doAsyncExample = session.CreateTarget("DoAsync.Example")
+           .DoAsync(DoAsyncExample)
+           .DoAsync(DoAsyncExample2);
+
+        session.CreateTarget("Rebuild.Server")
+          .SetDescription("Rebuilds the solution with some additional examples.")
+          .SetAsDefault()
+          .DependsOn(rebuild, refAssemblyExample, doAsyncExample);
     }
 
     public static void TargetFetchBuildVersion(ITaskContext context)
@@ -94,5 +104,16 @@ public class BuildScript : DefaultBuildScript
     public void TargetReferenceAssemblyExample(ITaskContext context)
     {
         XmlDocument xml = new XmlDocument();
+    }
+
+    public void DoAsyncExample(ITaskContext context)
+    {
+        Console.WriteLine("Example"); 
+     
+    }
+
+    public void DoAsyncExample2(ITaskContext context)
+    {
+        Console.WriteLine("Example2");
     }
 }
