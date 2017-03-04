@@ -13,7 +13,8 @@ namespace FlubuExample.Tests
         [Test]
         public void Test1()
         {
-            var flName = typeof(XmlDocument).Assembly.FullName;
+            var flName = typeof(XmlDocument).AssemblyQualifiedName;
+            var flN = typeof(Assert).AssemblyQualifiedName;
             Assert.AreEqual(1, 1);
         }
 

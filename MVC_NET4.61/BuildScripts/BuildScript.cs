@@ -6,7 +6,13 @@ using FlubuCore.Context;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
+////using NUnit.Framework;
+
+///this works 
 //#ref System.Xml.XmlDocument, System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+
+//Bug with non system referenced assemblies
+//ref NUnit.Framework.Assert, nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb
 
 /// <summary>
 /// Flubu build script example for .net. Flubu Default targets for .net are not included. 
@@ -103,13 +109,16 @@ public class BuildScript : DefaultBuildScript
 
     public void TargetReferenceAssemblyExample(ITaskContext context)
     {
+        ////How to get Assembly Qualified name for #ref
+        /// typeof(XmlDocument).AssemblyQualifiedName;
         XmlDocument xml = new XmlDocument();
     }
 
     public void DoAsyncExample(ITaskContext context)
     {
-        Console.WriteLine("Example"); 
-     
+        ///Bug with non system referenced assemblies
+        ////Assert.Equals(1, 1);
+        Console.WriteLine("Example2");
     }
 
     public void DoAsyncExample2(ITaskContext context)

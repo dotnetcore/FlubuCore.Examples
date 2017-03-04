@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using FlubuCore.Context;
 using FlubuCore.Scripting;
+////using NUnit.Framework;
 
+///This works
+//#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+
+///Bug with non system referenced assemblies
+//ref NUnit.Framework.Assert, nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb
+
+//// Exampine build scripts in other projects for more use cases
 public class MyBuildScript : DefaultBuildScript
 {
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
@@ -33,11 +43,16 @@ public class MyBuildScript : DefaultBuildScript
             .DotnetPublish("FlubuExample");
 
         var test = context.CreateTarget("test")
-            .AddCoreTask(x => x.Test().WorkingFolder("FlubuExample.Tests"));
+            .AddCoreTaskAsync(x => x.Test().WorkingFolder("FlubuExample.Tests"))
+            .AddCoreTaskAsync(x => x.Test().WorkingFolder("FlubuExample.Tests2"));
+
+        var doExample = context.CreateTarget("DoExample").Do(DoExample);
+        var doExample2 = context.CreateTarget("DoExample2").Do(DoExample2);
 
         //// todo include package into rebuild.
         context.CreateTarget("Rebuild")
             .SetAsDefault()
+            .DependsOnAsync(doExample, doExample2)
             .DependsOn(compile, test);
     }
 
@@ -51,5 +66,15 @@ public class MyBuildScript : DefaultBuildScript
                 .UpdateXmlFileTask("BuildScript.csproj")
                 .UpdatePath("//DotNetCliToolReference[@Version]/@Version", version.ToString(3))
                 .Execute(context);
+    }
+
+    private void DoExample(ITaskContext context)
+    {
+        XmlDocument xml = new XmlDocument();
+    }
+
+    private void DoExample2(ITaskContext context)
+    {
+        ////Assert.AreEqual(1, 1);
     }
 }
