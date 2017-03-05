@@ -10,10 +10,26 @@
 * Clone source code.
 * Examine build script project in MVC_NET4.61 solution especialy buildscript.cs 
 
-* run build.exe to run default build action. Build (example) will compile code, run unit tests, create iis web appilcation and package example application into zip for deployment.
+* In cmd run build.exe to run default build action. Build (example) will compile code, run unit tests, create iis web appilcation and package example application into zip for deployment.
 
 
 * run build.exe help to see other available build actions.
+* see other .net core examples for diferent flubu use cases.
+* see FlubuCore wiki
 
 ### How do I get set up (.net core)? ###
-* todo for now see flubu core wiki.
+#### .net core csproj ####
+* Clone source code.
+* Examine build script project in .Netcore_1.1.csproj folder especialy buildscript.cs 
+
+* In cmd navigate to NetCore_1.1.csproj folder
+* run dotnet restore buildscript.csproj
+* run dotnet flubu to run default build action. run dotnet flubu to see all available targets
+
+#### .net core xproj ####
+* Clone source code.
+* Examine build script project in .Netcore_1.1.xproj folder  especialy buildscript.cs 
+
+* In cmd navigate to NetCore_1.1.xproj folder
+* run dotnet restore
+* run dotnet flubu to run default build action. run dotnet flubu to see all available targets
