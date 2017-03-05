@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 using System.Xml;
 using FlubuCore.Context;
 using FlubuCore.Scripting;
-////using NUnit.Framework;
+using Newtonsoft.Json;
 
 ///This works
 //#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
-
-///Bug with non system referenced assemblies
-//ref NUnit.Framework.Assert, nunit.framework, Version=3.6.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb
+//#ass .\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll
 
 //// Exampine build scripts in other projects for more use cases
 public class MyBuildScript : DefaultBuildScript
@@ -75,6 +73,6 @@ public class MyBuildScript : DefaultBuildScript
 
     private void DoExample2(ITaskContext context)
     {
-        ////Assert.AreEqual(1, 1);
+        JsonConvert.SerializeObject("test");
     }
 }
