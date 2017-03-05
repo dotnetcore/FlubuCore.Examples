@@ -14,8 +14,8 @@
 
 
 * run build.exe help to see other available build actions.
-* see other .net core examples for diferent flubu use cases.
-* see FlubuCore wiki
+* see other examples for diferent flubu use cases.
+* see FlubuCore wiki for how to get started with flubu
 
 ### How do I get set up (.net core)? ###
 #### .net core csproj ####
@@ -25,7 +25,8 @@
 * In cmd navigate to NetCore_1.1.csproj folder
 * run dotnet restore buildscript.csproj
 * run dotnet flubu to run default build action. run dotnet flubu to see all available targets
-
+* see other examples for diferent flubu use cases.
+* see FlubuCore wiki for how to get started with flubu
 #### .net core xproj ####
 * Clone source code.
 * Examine build script project in .Netcore_1.1.xproj folder  especialy buildscript.cs 
@@ -33,3 +34,5 @@
 * In cmd navigate to NetCore_1.1.xproj folder
 * run dotnet restore
 * run dotnet flubu to run default build action. run dotnet flubu to see all available targets
+* see other examples for diferent flubu use cases.
+* see FlubuCore wiki for how to get started with flubu
