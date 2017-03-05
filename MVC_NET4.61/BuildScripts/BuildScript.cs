@@ -6,13 +6,10 @@ using FlubuCore.Context;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
-////using NUnit.Framework;
+using Newtonsoft.Json;
 
-///this works 
 //#ref System.Xml.XmlDocument, System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-
-//Bug with non system referenced assemblies
-//ref NUnit.Framework.Assert, nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb
+//#ass .\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll
 
 /// <summary>
 /// Flubu build script example for .net. Flubu Default targets for .net are not included. 
@@ -116,13 +113,12 @@ public class BuildScript : DefaultBuildScript
 
     public void DoAsyncExample(ITaskContext context)
     {
-        ///Bug with non system referenced assemblies
-        ////Assert.Equals(1, 1);
-        Console.WriteLine("Example2");
+        Console.WriteLine("Example");
     }
 
     public void DoAsyncExample2(ITaskContext context)
     {
+        JsonConvert.SerializeObject("Example");
         Console.WriteLine("Example2");
     }
 }

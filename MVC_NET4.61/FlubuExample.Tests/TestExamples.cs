@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace FlubuExample.Tests
@@ -15,6 +16,7 @@ namespace FlubuExample.Tests
         {
             var flName = typeof(XmlDocument).AssemblyQualifiedName;
             var flN = typeof(Assert).AssemblyQualifiedName;
+            var type = typeof(JsonConvert).AssemblyQualifiedName;
             Assert.AreEqual(1, 1);
         }
 
