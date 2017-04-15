@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.Xml;
 using FlubuCore.Context;
 using FlubuCore.Scripting;
+using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
 
-///This works
 //#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 //#ass .\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll
+//#imp .\BuildScript\BuildScriptHelper.cs
 
 //// Exampine build scripts in other projects for more use cases
 public class MyBuildScript : DefaultBuildScript
@@ -47,11 +48,32 @@ public class MyBuildScript : DefaultBuildScript
         var doExample = context.CreateTarget("DoExample").Do(DoExample);
         var doExample2 = context.CreateTarget("DoExample2").Do(DoExample2);
 
+        context.CreateTarget("iis.install").Do(IisInstall);
+
         //// todo include package into rebuild.
         context.CreateTarget("Rebuild")
             .SetAsDefault()
             .DependsOnAsync(doExample, doExample2)
             .DependsOn(compile, test);
+    }
+
+    public static void IisInstall(ITaskContext context)
+    {
+        context.Tasks().IisTasks()
+            .CreateAppPoolTask("SomeAppPoolName")
+            .ManagedRuntimeVersion("No Managed Code")
+            .Mode(CreateApplicationPoolMode.DoNothingIfExists)
+            .Execute(context);
+
+        context.Tasks().IisTasks()
+            .CreateWebsiteTask()
+            .WebsiteName("SomeWebSiteName")
+            .BindingProtocol("Http")
+            .Port(2000)
+            .PhysicalPath("SomePhysicalPath")
+            .ApplicationPoolName("SomeAppPoolName")
+            .WebsiteMode(CreateWebApplicationMode.DoNothingIfExists)
+            .Execute(context);
     }
 
     private void UpdateFlubuCoreNugetPackageToLatest(ITaskContext context)
@@ -69,6 +91,7 @@ public class MyBuildScript : DefaultBuildScript
     private void DoExample(ITaskContext context)
     {
         XmlDocument xml = new XmlDocument();
+        BuildScriptHelper.SomeMethod();
     }
 
     private void DoExample2(ITaskContext context)

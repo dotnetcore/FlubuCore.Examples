@@ -8,25 +8,28 @@
     <Compile Remove="FlubuExample.Tests2\**" />
     <Compile Remove="FlubuExample.Tests\**" />
     <Compile Remove="FlubuExample\**" />
+    <Compile Remove="Packages\**" />
     <EmbeddedResource Remove="BuildScript\bin\**" />
     <EmbeddedResource Remove="BuildScript\obj\**" />
     <EmbeddedResource Remove="FlubuExample.Tests2\**" />
     <EmbeddedResource Remove="FlubuExample.Tests\**" />
     <EmbeddedResource Remove="FlubuExample\**" />
+    <EmbeddedResource Remove="Packages\**" />
     <None Remove="BuildScript\bin\**" />
     <None Remove="BuildScript\obj\**" />
     <None Remove="FlubuExample.Tests2\**" />
     <None Remove="FlubuExample.Tests\**" />
     <None Remove="FlubuExample\**" />
+    <None Remove="Packages\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="FlubuExample.v12.suo" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FlubuCore" Version="1.3.3" />
+    <PackageReference Include="FlubuCore" Version="1.4.2" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
     <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-flubu" Version="1.3.3" />
+    <DotNetCliToolReference Include="dotnet-flubu" Version="1.4.2" />
   </ItemGroup>    
 </Project>
