@@ -6,10 +6,12 @@ using FlubuCore.Context;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
+using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
 
 //#ref System.Xml.XmlDocument, System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 //#ass .\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll
+//#imp .\BuildScripts\BuildHelper.cs
 
 /// <summary>
 /// Flubu build script example for .net. Flubu Default targets for .net are not included. 
@@ -72,10 +74,31 @@ public class BuildScript : DefaultBuildScript
            .DoAsync(DoAsyncExample)
            .DoAsync(DoAsyncExample2);
 
+        session.CreateTarget("iis.install").Do(IisInstall);
+
         session.CreateTarget("Rebuild.Server")
           .SetDescription("Rebuilds the solution with some additional examples.")
           .SetAsDefault()
           .DependsOn(rebuild, refAssemblyExample, doAsyncExample);
+    }
+
+    public static void IisInstall(ITaskContext context)
+    {
+        context.Tasks().IisTasks().CreateAppPoolTask("SomeAppPoolName")
+            .ManagedRuntimeVersion("No Managed Code")
+            .Mode(CreateApplicationPoolMode.DoNothingIfExists)
+            .Execute(context);
+
+        context.Tasks()
+            .IisTasks()
+            .CreateWebsiteTask()
+            .WebsiteName("SomeWebSiteName")
+            .BindingProtocol("Http")
+            .Port(2000)
+            .PhysicalPath("SomePhysicalPath")
+            .ApplicationPoolName("SomeAppPoolName")
+            .WebsiteMode(CreateWebApplicationMode.DoNothingIfExists)
+            .Execute(context);
     }
 
     public static void TargetFetchBuildVersion(ITaskContext context)
@@ -86,7 +109,7 @@ public class BuildScript : DefaultBuildScript
         version = new System.Version(version.Major, version.Minor, buildNumber, svnRevisionNumber);
         context.Properties.Set(BuildProps.BuildVersion, version);
     }
-
+ 
     public static void TargetPackage(ITaskContext context)
     {
         FilterCollection installBinFilters = new FilterCollection();
@@ -120,5 +143,10 @@ public class BuildScript : DefaultBuildScript
     {
         JsonConvert.SerializeObject("Example");
         Console.WriteLine("Example2");
+    }
+
+    public void ExternalMethodExample()
+    {
+        BuildHelper.SomeMethod();
     }
 }

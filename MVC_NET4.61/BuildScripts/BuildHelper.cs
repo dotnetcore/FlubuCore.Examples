@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Flubu;
-using Flubu.Builds;
-using Flubu.Builds.VSSolutionBrowsing;
 
-namespace BuildScripts
+public class BuildHelper
 {
-    class BuildHelper
+    public static void SomeMethod()
     {
-      
+        Console.WriteLine("Some method called.");
     }
 }
+
