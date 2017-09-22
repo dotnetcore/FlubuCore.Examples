@@ -54,8 +54,8 @@ public class BuildScript : DefaultBuildScript
         var unitTest = session.CreateTarget("unit.tests")
             .SetDescription("Runs unit tests")
             .DependsOn(loadSolution)
-            .AddTaskAsync(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
-            .AddTaskAsync(x => x.NUnitTaskForNunitV3("FlubuExample.Tests2"));
+            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
+            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests2"));
         
         var runExternalProgramExample = session.CreateTarget("abc").AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
 
