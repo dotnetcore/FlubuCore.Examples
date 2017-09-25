@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BuildScript\bin\**" />
+    <Compile Remove="BuildScript\obj\**" />
+    <Compile Remove="WebApplication1\**" />
+    <EmbeddedResource Remove="BuildScript\bin\**" />
+    <EmbeddedResource Remove="BuildScript\obj\**" />
+    <EmbeddedResource Remove="WebApplication1\**" />
+    <None Remove="BuildScript\bin\**" />
+    <None Remove="BuildScript\obj\**" />
+    <None Remove="WebApplication1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FlubuCore" Version="1.7.0" />
+  </ItemGroup>
+  
+     <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-flubu" Version="1.7.0" />
+  </ItemGroup>    
+
+</Project>

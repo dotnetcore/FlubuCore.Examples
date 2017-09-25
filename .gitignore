@@ -36,3 +36,12 @@ MVC_NET4.61/.vs/FlubuExample/v15/sqlite3/storage.ide
 MVC_NET4.61/.vs/FlubuExample/v15/.suo
 NetCore_1.1.csproj/.vs/FlubuExample/v15/.suo
 NetCore_1.1.csproj/.vs/FlubuExample/v15/sqlite3/storage.ide
+DeployScriptExample/.vs/
+DeployScriptExample/BuildScript/obj/
+DeployScriptExample/obj/BuildScript.csproj.nuget.cache
+DeployScriptExample/obj/
+DeployScriptExample/output/
+DeployScriptExample/WebApplication1/obj/
+*.log
+DeployScriptExample/WebApplication1/bin/
+DeployScriptExample/WebApplication1/.vs/
