@@ -96,6 +96,7 @@ public class MyBuildScript : DefaultBuildScript
 
     private void DoExample2(ITaskContext context)
     {
+        //// run 'dotnet flubu Rebuild -argName=SomeValue' to pass argument
         var example = context.ScriptArgs["argName"];
         if (string.IsNullOrEmpty(example))
         {

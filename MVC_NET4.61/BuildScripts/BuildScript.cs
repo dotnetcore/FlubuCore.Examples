@@ -70,6 +70,7 @@ public class BuildScript : DefaultBuildScript
 
         var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
 
+        ////Run build.exe Rebuild.Server -exampleArg=someValue to pass argument
         var doAsyncExample = session.CreateTarget("DoAsync.Example")
            .DoAsync(DoAsyncExample, session.ScriptArgs["exampleArg"])
            .DoAsync(DoAsyncExample2);
