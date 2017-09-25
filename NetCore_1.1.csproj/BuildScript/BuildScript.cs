@@ -96,6 +96,11 @@ public class MyBuildScript : DefaultBuildScript
 
     private void DoExample2(ITaskContext context)
     {
-        JsonConvert.SerializeObject("test");
+        var example = context.ScriptArgs["argName"];
+        if (string.IsNullOrEmpty(example))
+        {
+            example = "no vaule through script argument argName";
+        }
+        JsonConvert.SerializeObject(example);
     }
 }

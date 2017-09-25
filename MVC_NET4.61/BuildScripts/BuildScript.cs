@@ -71,7 +71,7 @@ public class BuildScript : DefaultBuildScript
         var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
 
         var doAsyncExample = session.CreateTarget("DoAsync.Example")
-           .DoAsync(DoAsyncExample)
+           .DoAsync(DoAsyncExample, session.ScriptArgs["exampleArg"])
            .DoAsync(DoAsyncExample2);
 
         session.CreateTarget("iis.install").Do(IisInstall);
@@ -134,9 +134,9 @@ public class BuildScript : DefaultBuildScript
         XmlDocument xml = new XmlDocument();
     }
 
-    public void DoAsyncExample(ITaskContext context)
+    public void DoAsyncExample(ITaskContext context, string param)
     {
-        Console.WriteLine("Example");
+        Console.WriteLine(string.Format("Example {0}", param));
     }
 
     public void DoAsyncExample2(ITaskContext context)

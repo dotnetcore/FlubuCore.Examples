@@ -26,10 +26,10 @@
     <None Remove="FlubuExample.v12.suo" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FlubuCore" Version="1.6.6" />
+    <PackageReference Include="FlubuCore" Version="1.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
     <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-flubu" Version="1.6.6" />
+    <DotNetCliToolReference Include="dotnet-flubu" Version="1.7.1" />
   </ItemGroup>    
 </Project>
