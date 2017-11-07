@@ -46,3 +46,6 @@ DeployScriptExample/WebApplication1/obj/
 DeployScriptExample/WebApplication1/bin/
 DeployScriptExample/WebApplication1/.vs/
 MVC_NET4.61/.vs/
+NetCore_1.1.csproj/.vs/FlubuExample/v15/Server/sqlite3/db.lock
+NetCore_1.1.csproj/.vs/FlubuExample/v15/Server/sqlite3/storage.ide
+NetCore_1.1.csproj/.vs/

@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 //#ass .\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll
 //#imp .\BuildScript\BuildScriptHelper.cs
 
-//// Exampine build scripts in other projects for more use cases
+//// Examine build scripts in other projects(especialy mvc .net461 example) for more use cases
 public class MyBuildScript : DefaultBuildScript
 {
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
