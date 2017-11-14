@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Xml;
 using FlubuCore.Context;
@@ -13,7 +14,7 @@ using Newtonsoft.Json;
 //#ass .\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll
 //#imp .\BuildScript\BuildScriptHelper.cs
 
-//// Examine build scripts in other projects(especialy mvc .net461 example) for more use cases
+//// Examine build scripts in other projects(especialy mvc .net461 example) for more use cases. Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
 public class MyBuildScript : DefaultBuildScript
 {
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
@@ -39,7 +40,12 @@ public class MyBuildScript : DefaultBuildScript
         var package = context
             .CreateTarget("Package")
             .CoreTaskExtensions()
-            .DotnetPublish("FlubuExample");
+            .DotnetPublish("FlubuExample")
+            .CreateZipPackageFromProjects("FlubuExample", "netstandard1.6", "FlubuExample")
+            .BackToTarget();
+
+        //// Can be used instead of CreateZipPackageFromProject. See MVC_NET4.61 project for full example of PackageTask
+        //// context.CreateTarget("Package2").AddTask(x => x.PackageTask("FlubuExample"));
 
         var test = context.CreateTarget("test")
             .AddCoreTaskAsync(x => x.Test().WorkingFolder("FlubuExample.Tests"))
@@ -54,7 +60,7 @@ public class MyBuildScript : DefaultBuildScript
         context.CreateTarget("Rebuild")
             .SetAsDefault()
             .DependsOnAsync(doExample, doExample2)
-            .DependsOn(compile, test);
+            .DependsOn(compile, test, package);
     }
 
     public static void IisInstall(ITaskContext context)
@@ -90,8 +96,20 @@ public class MyBuildScript : DefaultBuildScript
 
     private void DoExample(ITaskContext context)
     {
-        XmlDocument xml = new XmlDocument();
-        BuildScriptHelper.SomeMethod();
+        XmlDocument xml = new XmlDocument(); //// Just an a example that external reference works.
+        BuildScriptHelper.SomeMethod(); //// Just an a example that referencing other cs file works.
+
+        ////Example of predefined propertie. Propertie are predefined by flubu.
+        var osPlatform = context.Properties.Get<OSPlatform>(PredefinedBuildProperties.OsPlatform);
+
+        if (osPlatform == OSPlatform.Windows)
+        {
+            context.LogInfo("Running on windows");
+        }
+        else if(osPlatform ==OSPlatform.Linux)
+        {
+            context.LogInfo("running on linux");
+        }
     }
 
     private void DoExample2(ITaskContext context)
@@ -102,6 +120,8 @@ public class MyBuildScript : DefaultBuildScript
         {
             example = "no vaule through script argument argName";
         }
+
+
         JsonConvert.SerializeObject(example);
     }
 }
