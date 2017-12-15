@@ -50,3 +50,13 @@ NetCore_1.1.csproj/.vs/FlubuExample/v15/Server/sqlite3/db.lock
 NetCore_1.1.csproj/.vs/FlubuExample/v15/Server/sqlite3/storage.ide
 NetCore_1.1.csproj/.vs/
 NetCore_1.1.csproj/output/
+NetCore_2.0.csproj/.vs/
+NetCore_2.0.csproj/bin/
+NetCore_2.0.csproj/FlubuExample.Tests/bin/
+NetCore_2.0.csproj/FlubuExample.Tests/obj/
+NetCore_2.0.csproj/FlubuExample.Tests2/bin/
+NetCore_2.0.csproj/FlubuExample.Tests2/obj/
+NetCore_2.0.csproj/FlubuExample/bin/
+NetCore_2.0.csproj/FlubuExample/obj/
+NetCore_2.0.csproj/obj/
+NetCore_2.0.csproj/output/
