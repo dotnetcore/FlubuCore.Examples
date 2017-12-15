@@ -11,7 +11,7 @@ using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
 
 //#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
-//#ass ./packages/Newtonsoft.Json.9.0.1/lib/netstandard1.0/Newtonsoft.Json.dll
+//#ass ./Packages/Newtonsoft.Json.9.0.1/lib/netstandard1.0/Newtonsoft.Json.dll
 //#imp ./BuildScript/BuildScriptHelper.cs
 
 //// Examine build scripts in other projects(especialy mvc .net461 example) for more use cases. Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
