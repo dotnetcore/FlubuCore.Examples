@@ -72,7 +72,7 @@ public class BuildScript : DefaultBuildScript
 
         ////Run build.exe Rebuild.Server -exampleArg=someValue to pass argument
         var doAsyncExample = session.CreateTarget("DoAsync.Example")
-           .DoAsync((Action<ITaskContextInternal>)DoAsyncExample, session.ScriptArgs["exampleArg"])
+           .DoAsync((Action<ITaskContextInternal, string>)DoAsyncExample, session.ScriptArgs["exampleArg"])
            .DoAsync((Action<ITaskContextInternal>)DoAsyncExample2);
   
         session.CreateTarget("iis.install").Do(IisInstall);
