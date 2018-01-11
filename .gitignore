@@ -60,3 +60,14 @@ NetCore_2.0.csproj/FlubuExample/bin/
 NetCore_2.0.csproj/FlubuExample/obj/
 NetCore_2.0.csproj/obj/
 NetCore_2.0.csproj/output/
+NetCore_csproj/FlubuExample.Tests/obj/
+NetCore_csproj/FlubuExample.Tests2/bin/
+NetCore_csproj/FlubuExample.Tests2/obj/FlubuExample.Tests2.csproj.nuget.g.props
+NetCore_csproj/FlubuExample.Tests2/obj/
+NetCore_csproj/FlubuExample/bin/
+NetCore_csproj/FlubuExample/obj/
+NetCore_csproj/obj/
+NetCore_csproj/output/
+NetCore_csproj/FlubuExample.Tests/bin/
+NetCore_csproj/bin/
+NetCore_csproj/.vs/

@@ -47,12 +47,14 @@ public class BuildScript : DefaultBuildScript
            .TaskExtensions().GenerateCommonAssemblyInfo().BackToTarget();
 
         var compile = session.CreateTarget("compile")
+            .SetAsDefault()
             .SetDescription("Compiles the solution.")
             .AddTask(x => x.CompileSolutionTask())
             .DependsOn("generate.commonassinfo");
 
         var unitTest = session.CreateTarget("unit.tests")
             .SetDescription("Runs unit tests")
+            .SetAsDefault()
             .DependsOn(loadSolution)
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests2"));
@@ -60,12 +62,13 @@ public class BuildScript : DefaultBuildScript
         var runExternalProgramExample = session.CreateTarget("abc").AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
 
         var package = session.CreateTarget("Package")
+         
             .SetDescription("Packages mvc example for deployment")
             .Do(TargetPackage);
 
        var rebuild = session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
-            .SetAsDefault()
+        
             .DependsOn(compile, unitTest, package);
 
         var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
@@ -79,7 +82,6 @@ public class BuildScript : DefaultBuildScript
 
         session.CreateTarget("Rebuild.Server")
           .SetDescription("Rebuilds the solution with some additional examples.")
-          .SetAsDefault()
           .DependsOn(rebuild, refAssemblyExample, doAsyncExample);
     }
 
