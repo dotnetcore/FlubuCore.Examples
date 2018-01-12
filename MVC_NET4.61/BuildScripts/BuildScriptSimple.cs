@@ -6,7 +6,7 @@ using FlubuCore.Scripting;
 
 /// <summary>
 /// In this build script default targets(compile etc are included. 
-/// Type "dotnet flubu -s=BuildScriptWithDt.cs help" in cmd to see
+/// Type "build.exe -s=BuildScriptSimple.cs help" in cmd to see
 /// </summary>
 public class BuildScriptSimple : DefaultBuildScript
 {

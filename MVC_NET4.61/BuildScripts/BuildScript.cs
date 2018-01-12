@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 //#imp .\BuildScripts\BuildHelper.cs
 
 /// <summary>
-/// Flubu build script example for .net. Flubu Default targets for .net are not included. You can include them with build property BuildProps.DefaultTargets
+/// Flubu build script example for .net. Flubu Default targets for .net are not included.
 /// Most of them are created in this buildScipt tho. (load.solution, generate,commonAssinfo, compile) as a build script example
 /// </summary>
 public class BuildScript : DefaultBuildScript
@@ -47,7 +47,11 @@ public class BuildScript : DefaultBuildScript
 
         var compile = session.CreateTarget("compile")
             .SetDescription("Compiles the solution.")
-            .AddTask(x => x.CompileSolutionTask())
+            .AddTask(x => x.CompileSolutionTask()
+                ////ForMember example: run build.exe compile -c=Debug to pass argument to build configuration. If -c is not specified default specifued value is used. 
+                /// Rum build.exe compile help for detailed target help with all arguments you can pass through to target.
+                /// this is just example and in real scenario is recomended to set BuildConfiguration only through build properties as other tasks might use it.  
+                .ForMember(y => y.BuildConfiguration("Release"), "c", "The build configuration solution will be build."))
             .DependsOn("generate.commonassinfo");
 
         var unitTest = session.CreateTarget("unit.tests")
@@ -55,14 +59,16 @@ public class BuildScript : DefaultBuildScript
             .DependsOn(loadSolution)
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests2"));
-        
-        var runExternalProgramExample = session.CreateTarget("abc").AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
+
+        var runExternalProgramExample = session.CreateTarget("run.libz")
+            .AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
+            //// Pass any arguments...
+            //// .WithArguments());
 
         var package = session.CreateTarget("Package")
-         
             .SetDescription("Packages mvc example for deployment")
             .Do(TargetPackage);
-
+        
        var rebuild = session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
             .SetAsDefault()
@@ -70,7 +76,7 @@ public class BuildScript : DefaultBuildScript
 
         var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
 
-        ////Run build.exe Rebuild.Server -exampleArg=someValue to pass argument
+        ////Run build.exe Rebuild.Server -exampleArg=someValue to pass to argument
         var doAsyncExample = session.CreateTarget("DoAsync.Example")
            .DoAsync((Action<ITaskContextInternal, string>)DoAsyncExample, session.ScriptArgs["exampleArg"])
            .DoAsync((Action<ITaskContextInternal>)DoAsyncExample2);
@@ -141,8 +147,11 @@ public class BuildScript : DefaultBuildScript
 
     public void DoAsyncExample2(ITaskContext context)
     {
-        JsonConvert.SerializeObject("Example");
-        Console.WriteLine("Example2");
+        var exampleSerialization = JsonConvert.SerializeObject("Example serialization");
+        var deserialized = JsonConvert.DeserializeObject<string>(exampleSerialization);
+        Console.WriteLine(deserialized);
+    
+        ExternalMethodExample();
     }
 
     public void ExternalMethodExample()
