@@ -14,9 +14,8 @@ using Newtonsoft.Json;
 //#imp .\BuildScripts\BuildHelper.cs
 
 /// <summary>
-/// Flubu build script example for .net. Flubu Default targets for .net are not included. 
+/// Flubu build script example for .net. Flubu Default targets for .net are not included. You can include them with build property BuildProps.DefaultTargets
 /// Most of them are created in this buildScipt tho. (load.solution, generate,commonAssinfo, compile) as a build script example
-/// With Default targets included see BuildScriptWithDt.cs.
 /// </summary>
 public class BuildScript : DefaultBuildScript
 {
@@ -47,14 +46,12 @@ public class BuildScript : DefaultBuildScript
            .TaskExtensions().GenerateCommonAssemblyInfo().BackToTarget();
 
         var compile = session.CreateTarget("compile")
-            .SetAsDefault()
             .SetDescription("Compiles the solution.")
             .AddTask(x => x.CompileSolutionTask())
             .DependsOn("generate.commonassinfo");
 
         var unitTest = session.CreateTarget("unit.tests")
             .SetDescription("Runs unit tests")
-            .SetAsDefault()
             .DependsOn(loadSolution)
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests2"));
@@ -68,7 +65,7 @@ public class BuildScript : DefaultBuildScript
 
        var rebuild = session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
-        
+            .SetAsDefault()
             .DependsOn(compile, unitTest, package);
 
         var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
