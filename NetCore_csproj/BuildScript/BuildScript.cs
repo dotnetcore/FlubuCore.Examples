@@ -21,21 +21,25 @@ public class MyBuildScript : DefaultBuildScript
     {
         context.Properties.Set(BuildProps.CompanyName, "Flubu");
         context.Properties.Set(BuildProps.CompanyCopyright, "Copyright (C) 2010-2016 Flubu");
-        context.Properties.Set(BuildProps.ProductId, "FlubuCoreExample");
-        context.Properties.Set(BuildProps.ProductName, "FlubuCoreExample");
+        context.Properties.Set(BuildProps.ProductId, "FlubuExample");
+        context.Properties.Set(BuildProps.ProductName, "FlubuExample");
+        context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
     }
 
     protected override void ConfigureTargets(ITaskContext context)
     {
-        context.CreateTarget("Fetch.FlubuCore.Version")
-            .Do(UpdateFlubuCoreNugetPackageToLatest);
+        var buildVersion = context.CreateTarget("buildVersion")
+            .SetAsHidden()
+            .SetDescription("Fetches flubu version from FlubuExample.ProjectVersion.txt file.")
+            .AddTask(x => x.FetchBuildVersionFromFileTask());
 
         var compile = context
             .CreateTarget("compile")
-            .SetDescription("Compiles the VS solution")
-            .AddCoreTask(x => x.ExecuteDotnetTask("restore").WithArguments("FlubuExample.sln"))
-            .CoreTaskExtensions().DotnetBuild("FlubuExample.sln")
-            .BackToTarget();
+            .SetDescription("Compiles the VS solution and sets version to FlubuExample.csproj")
+            .AddCoreTask(x => x.UpdateNetCoreVersionTask("FlubuExample/FlubuExample.csproj"))
+            .AddCoreTask(x => x.Restore())
+            .AddCoreTask(x => x.Build())
+            .DependsOn(buildVersion);
 
         var package = context
             .CreateTarget("Package")
@@ -48,8 +52,8 @@ public class MyBuildScript : DefaultBuildScript
         //// context.CreateTarget("Package2").AddTask(x => x.PackageTask("FlubuExample"));
 
         var test = context.CreateTarget("test")
-            .AddCoreTaskAsync(x => x.Test().WorkingFolder("FlubuExample.Tests"))
-            .AddCoreTaskAsync(x => x.Test().WorkingFolder("FlubuExample.Tests2"));
+            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests"))
+            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests2"));
 
         var doExample = context.CreateTarget("DoExample").Do(DoExample);
         var doExample2 = context.CreateTarget("DoExample2").Do(DoExample2);
