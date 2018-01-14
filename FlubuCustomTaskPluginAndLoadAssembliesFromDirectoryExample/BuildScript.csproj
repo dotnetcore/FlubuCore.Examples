@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="BuildScript\bin\**" />
+    <Compile Remove="BuildScript\obj\**" />
+    <Compile Remove="FlubuCore.PluginExample\**" />
+    <Compile Remove="FlubuExample.Tests2\**" />
+    <Compile Remove="FlubuExample.Tests\**" />
+    <Compile Remove="FlubuExample\**" />
+    <Compile Remove="Packages\**" />
+    <EmbeddedResource Remove="BuildScript\bin\**" />
+    <EmbeddedResource Remove="BuildScript\obj\**" />
+    <EmbeddedResource Remove="FlubuCore.PluginExample\**" />
+    <EmbeddedResource Remove="FlubuExample.Tests2\**" />
+    <EmbeddedResource Remove="FlubuExample.Tests\**" />
+    <EmbeddedResource Remove="FlubuExample\**" />
+    <EmbeddedResource Remove="Packages\**" />
+    <None Remove="BuildScript\bin\**" />
+    <None Remove="BuildScript\obj\**" />
+    <None Remove="FlubuCore.PluginExample\**" />
+    <None Remove="FlubuExample.Tests2\**" />
+    <None Remove="FlubuExample.Tests\**" />
+    <None Remove="FlubuExample\**" />
+    <None Remove="Packages\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="FlubuExample.v12.suo" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FlubuCore" Version="2.3.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+    <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-flubu" Version="2.3.0" />
+  </ItemGroup>
+    <ItemGroup>
+      <Reference Include="FlubuCore.PluginExample">
+        <HintPath>FlubuLib\FlubuCore.PluginExample.dll</HintPath>
+      </Reference>
+    </ItemGroup>    
+</Project>
