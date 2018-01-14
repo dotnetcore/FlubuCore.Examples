@@ -86,18 +86,6 @@ public class MyBuildScript : DefaultBuildScript
             .Execute(context);
     }
 
-    private void UpdateFlubuCoreNugetPackageToLatest(ITaskContext context)
-    {
-        var fetchBuildVersionFromFileTask = context.Tasks().FetchBuildVersionFromFileTask();
-
-        fetchBuildVersionFromFileTask.ProjectVersionFileName(@"..\FlubuCore.ProjectVersion.txt");
-        var version = fetchBuildVersionFromFileTask.Execute(context);
-        context.Tasks()
-                .UpdateXmlFileTask("BuildScript.csproj")
-                .UpdatePath("//DotNetCliToolReference[@Version]/@Version", version.ToString(3))
-                .Execute(context);
-    }
-
     private void DoExample(ITaskContext context)
     {
         XmlDocument xml = new XmlDocument(); //// Just an a example that external reference works.
