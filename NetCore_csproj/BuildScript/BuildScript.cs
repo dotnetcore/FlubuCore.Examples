@@ -24,6 +24,7 @@ public class MyBuildScript : DefaultBuildScript
         context.Properties.Set(BuildProps.ProductId, "FlubuExample");
         context.Properties.Set(BuildProps.ProductName, "FlubuExample");
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
+		context.Properties.Set(BuildProps.BuildConfiguration, "Release");
     }
 
     protected override void ConfigureTargets(ITaskContext context)

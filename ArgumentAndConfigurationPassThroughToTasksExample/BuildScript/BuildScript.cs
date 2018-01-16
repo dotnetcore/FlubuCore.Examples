@@ -26,9 +26,10 @@ public class MyBuildScript : DefaultBuildScript
             .AddCoreTask(x => x.Build().ForMember(y => y.Configuration("Debug"), "c")); //// Debug is default value. If not set in enviroment variable, config or pass through from argument.
 
         //// run in cmd 'dotnet flubu -key2=5'
-        context.CreateTarget("DoExample").SetAsDefault().Do(DoExample, "DefaultValue", 0, taskAction: o =>
+        context.CreateTarget("DoExample").SetAsDefault().Do(DoExample, "DefaultValue", 0, doOptions: o =>
         {
             o.SetTaskName("Do example with ForMember");
+            o.SetDescription("Do task logs string and integer value.");
             o.ForMember(x => x.Param, "key1", "custom help");
             o.ForMember(x => x.Param2, "key2"); //// adds default help to target help. Run 'dotnet flubu DoExample help'
         });
