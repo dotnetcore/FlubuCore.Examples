@@ -7,6 +7,10 @@ using FlubuCore.Tasks.Iis;
 
 namespace BuildScript
 {
+   
+    //// Deploy script can be executed with or without flubu web api. If u want to execute deploy script
+    //// remotely execute it with flubu web api otherwise if u want to execute it locally execute it with flubu runner or dotnet cli tool.
+    //// see wiki for executing script remotely with flubu web api https://github.com/flubu-core/flubu.core/wiki/6-Web-Api:-Getting-started
     public class DeployScript : DefaultBuildScript
     {
         protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
