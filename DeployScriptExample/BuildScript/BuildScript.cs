@@ -7,6 +7,7 @@ using FlubuCore.Scripting;
 
 namespace BuildScript.BuildScript
 {
+    //// see wiki for executing script remotely with flubu web api https://github.com/flubu-core/flubu.core/wiki/6-Web-Api:-Getting-started
     public class BuildScript : DefaultBuildScript
     {
         protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
