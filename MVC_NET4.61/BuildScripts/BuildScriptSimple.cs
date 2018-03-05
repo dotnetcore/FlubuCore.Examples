@@ -5,8 +5,9 @@ using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
 
 /// <summary>
+
 /// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
-/// Type "dotnet flubu -s=BuildScriptWithDt.cs help" in cmd to see
+/// Type "build.exe help -s=BuildScriptSimple.cs  in cmd to see help
 /// </summary>
 public class BuildScriptSimple : DefaultBuildScript
 {

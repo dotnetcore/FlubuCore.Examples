@@ -20,18 +20,18 @@
 ### How do I get set up (.net core)? ###
 #### .net core csproj ####
 * Clone source code.
-* Examine build script project in .Netcore_1.1.csproj folder especialy buildscript.cs 
+* Examine build script project in .Netcore.csproj folder especialy buildscript.cs 
 
-* In cmd navigate to NetCore_1.1.csproj folder
+* In cmd navigate to NetCore_csproj folder
 * run dotnet restore buildscript.csproj
 * run dotnet flubu to run default build action. run dotnet flubu to see all available targets
 * see other examples for diferent flubu use cases.
 * see FlubuCore wiki for how to get started with flubu
 #### .net core xproj ####
 * Clone source code.
-* Examine build script project in .Netcore_1.1.xproj folder  especialy buildscript.cs 
+* Examine build script project in .Netcore.xproj folder  especialy buildscript.cs 
 
-* In cmd navigate to NetCore_1.1.xproj folder
+* In cmd navigate to NetCore_xproj folder
 * run dotnet restore
 * run dotnet flubu to run default build action. run dotnet flubu to see all available targets
 * see other examples for diferent flubu use cases.

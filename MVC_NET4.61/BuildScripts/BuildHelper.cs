@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FlubuCore.Context;
+using FlubuCore.Tasks;
+using System;
 
 public class BuildHelper
 {
@@ -7,4 +9,3 @@ public class BuildHelper
         Console.WriteLine("Some method called.");
     }
 }
-
