@@ -3,7 +3,7 @@
 ### Flubu example ###
 
 * Example of flubu usage. Flubu is for building projects and executing deployment scripts using C# code.
-* See NetCore csproj project for how to test and debug your buildscript.
+* How to test and debug build script example is in NetCore_csproj project.
 
 
 ### How do I get set up (.net 4.6)? ###
