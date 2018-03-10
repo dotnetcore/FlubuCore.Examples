@@ -8,6 +8,7 @@ using FlubuCore.Scripting;
 
 /// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
 /// Type "build.exe help -s=BuildScriptSimple.cs  in cmd to see help
+/// How to test and debug build script example is in NetCore_csproj project.
 /// </summary>
 public class BuildScriptSimple : DefaultBuildScript
 {
