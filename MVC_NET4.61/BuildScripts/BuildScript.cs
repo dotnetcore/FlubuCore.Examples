@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 /// <summary>
 /// Flubu build script example for .net. Flubu Default targets for .net are not included.
 /// Most of them are created in this buildScipt tho. (load.solution, generate,commonAssinfo, compile) as a build script example
+/// How to test and debug build script example is in NetCore_csproj project. 
 /// </summary>
 public class BuildScript : DefaultBuildScript
 {
