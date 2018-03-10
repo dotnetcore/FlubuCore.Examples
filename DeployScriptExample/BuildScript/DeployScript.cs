@@ -11,6 +11,7 @@ namespace BuildScript
     //// Deploy script can be executed with or without flubu web api. If u want to execute deploy script
     //// remotely execute it with flubu web api otherwise if u want to execute it locally execute it with flubu runner or dotnet cli tool.
     //// see wiki for detailed tutorial about how to execute script remotely with flubu web api https://github.com/flubu-core/flubu.core/wiki/6-Web-Api:-Getting-started
+    //// How to test and debug build script example is in NetCore_csproj project.
     public class DeployScript : DefaultBuildScript
     {
         protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
