@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="BuildScript\bin\**" />
@@ -30,10 +30,21 @@
     <None Remove="FlubuExample.v12.suo" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FlubuCore" Version="2.3.2" />
+    <PackageReference Include="FlubuCore" Version="2.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
     <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-flubu" Version="2.3.2" />
-  </ItemGroup>    
+    <DotNetCliToolReference Include="dotnet-flubu" Version="2.5.0" />
+  </ItemGroup>
+    <ItemGroup>
+      <Reference Include="xunit.assert">
+        <HintPath>C:\Users\markoz\.nuget\packages\xunit.assert\2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
+      </Reference>
+      <Reference Include="xunit.core">
+        <HintPath>C:\Users\markoz\.nuget\packages\xunit.extensibility.core\2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
+      </Reference>
+    </ItemGroup>    
 </Project>
