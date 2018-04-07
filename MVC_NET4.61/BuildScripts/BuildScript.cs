@@ -42,9 +42,9 @@ public class BuildScript : DefaultBuildScript
             .Do(TargetFetchBuildVersion);
 
         session.CreateTarget("generate.commonassinfo")
-           .SetDescription("Generates common assembly info")
-           .DependsOn(updateVersion)
-           .TaskExtensions().GenerateCommonAssemblyInfo().BackToTarget();
+            .SetDescription("Generates common assembly info")
+            .DependsOn(updateVersion)
+            .AddTask(x => x.GenerateCommonAssemblyInfoTask());
 
         var compile = session.CreateTarget("compile")
             .SetDescription("Compiles the solution.")

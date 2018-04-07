@@ -1,5 +1,6 @@
 ﻿using System;
 using FlubuCore.Context;
+using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
@@ -31,17 +32,26 @@ public class BuildScriptSimple : DefaultBuildScript
 
         var unitTest = session.CreateTarget("unit.tests")
             .SetDescription("Runs unit tests")
-            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"));
+            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
+            .DependsOn("load.solution");
 
         var package = session.CreateTarget("Package")
             .SetDescription("Packages mvc example for deployment")
             .Do(TargetPackage);
+
+        session.CreateTarget("test").Do(Example);
 
         session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
             .SetAsDefault()
             .DependsOn("compile") //// compile is included as one of the default targets.
             .DependsOn(unitTest, package);
+    }
+
+    public static void Example(ITargetFluentInterface target)
+    {
+        target.AddTask(x => x.CompileSolutionTask())
+            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"));
     }
 
     public static void TargetFetchBuildVersion(ITaskContext context)
