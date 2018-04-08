@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Xml;
 using FlubuCore.Context;
+using FlubuCore.Context.FluentInterface.TaskExtensions;
 using FlubuCore.Scripting;
 using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
@@ -44,10 +45,8 @@ public class MyBuildScript : DefaultBuildScript
 
         var package = context
             .CreateTarget("Package")
-            .CoreTaskExtensions()
-            .DotnetPublish("FlubuExample")
-            .CreateZipPackageFromProjects("FlubuExample", "netstandard2.0", "FlubuExample")
-            .BackToTarget();
+            .AddCoreTask(x => x.Publish("FlubuExample"))
+            .AddCoreTask(x => x.CreateZipPackageFromProjects("FlubuExample", "netstandard2.0", "FlubuExample"));
 
         //// Can be used instead of CreateZipPackageFromProject. See MVC_NET4.61 project for full example of PackageTask
         //// context.CreateTarget("Package2").AddTask(x => x.PackageTask("FlubuExample"));
