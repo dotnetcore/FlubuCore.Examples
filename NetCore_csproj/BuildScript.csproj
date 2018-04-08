@@ -30,7 +30,7 @@
     <None Remove="FlubuExample.v12.suo" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FlubuCore" Version="2.5.0" />
+    <PackageReference Include="FlubuCore" Version="2.6.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="xunit" Version="2.3.1" />
