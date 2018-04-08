@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FlubuCore.Context;
+using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Scripting;
 using FlubuCore.Tasks.Iis;
 
@@ -20,31 +21,35 @@ namespace BuildScript
 
         protected override void ConfigureTargets(ITaskContext session)
         {
-            session.CreateTarget("deploy")
-                .AddTask(x =>
-                    x.IisTasks().CreateAppPoolTask("Example app pool")
-                        .Mode(CreateApplicationPoolMode.DoNothingIfExists))
-                .AddTask(x =>
-                    x.IisTasks().ControlAppPoolTask("Example app pool", ControlApplicationPoolAction.Stop)
-                        .DoNotFailOnError())
+            session.CreateTarget("deploy.local").Do(Deploy, "c:\\ExamplaApp").SetAsDefault();
+                
+            session.CreateTarget("deploy.test").Do(Deploy, "d:\\ExamplaApp");
+
+            session.CreateTarget("deploy.test").Do(Deploy, "e:\\ExamplaApp");
+
+        }
+
+        private void Deploy(ITargetFluentInterface target, string deployPath)
+        {
+            target
+                .AddTask(x => x.IisTasks().CreateAppPoolTask("Example app pool").Mode(CreateApplicationPoolMode.DoNothingIfExists))
+                .AddTask(x => x.IisTasks().ControlAppPoolTask("Example app pool", ControlApplicationPoolAction.Stop).DoNotFailOnError())
                 .Do(UnzipPackage)
                 .AddTask(x => x.CopyDirectoryStructureTask(@"Packages\ExampleApp", @"C:\ExampleApp", true).Retry(20, 5000))
                 .Do(CreateWebSite)
                 .AddTask(x => x.IisTasks().ControlAppPoolTask("Example app pool", ControlApplicationPoolAction.Start));
-
-
-            session.CreateTarget("deployTest3");
-
         }
 
-        public void UnzipPackage(ITaskContext context)
+        
+
+        private void UnzipPackage(ITaskContext context)
         {
             var files = Directory.EnumerateFiles("packages", "*.zip").ToList();
             string zip = files[0];
             context.Tasks().UnzipTask(zip, "packages").Execute(context);
         }
 
-        public void CreateWebSite(ITaskContext context)
+        private void CreateWebSite(ITaskContext context)
         {
             context.Tasks().IisTasks().CreateWebsiteTask()
                 .ApplicationPoolName("Example app pool")

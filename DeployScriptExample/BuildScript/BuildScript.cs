@@ -34,7 +34,7 @@ namespace BuildScript.BuildScript
                 .AddTask(x => x.FlubuWebApiTasks().GetTokenTask("test", "test"))
                 .AddTask(x => x.FlubuWebApiTasks().DeletePackagesTask())
                 .AddTask(x => x.FlubuWebApiTasks().UploadPackageTask(".\\BuildScript\\ExamplePackages", "*.zip"))
-                .AddTask(x => x.FlubuWebApiTasks().ExecuteScriptTask("deploy", "DeployScript.cs"));
+                .AddTask(x => x.FlubuWebApiTasks().ExecuteScriptTask("deploy.local", "DeployScript.cs"));
         }
     }
 }

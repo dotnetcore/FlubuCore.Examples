@@ -17,11 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FlubuCore" Version="1.7.0" />
+    <PackageReference Include="FlubuCore" Version="2.6.0" />
   </ItemGroup>
   
      <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-flubu" Version="1.7.0" />
+    <DotNetCliToolReference Include="dotnet-flubu" Version="2.6.0" />
   </ItemGroup>    
 
 </Project>
