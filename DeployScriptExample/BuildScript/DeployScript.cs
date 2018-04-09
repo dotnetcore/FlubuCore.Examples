@@ -22,10 +22,10 @@ namespace BuildScript
         protected override void ConfigureTargets(ITaskContext session)
         {
             session.CreateTarget("deploy.local").Do(Deploy, "c:\\ExamplaApp").SetAsDefault();
-                
+
             session.CreateTarget("deploy.test").Do(Deploy, "d:\\ExamplaApp");
 
-            session.CreateTarget("deploy.test").Do(Deploy, "e:\\ExamplaApp");
+            session.CreateTarget("deploy.prod").Do(Deploy, "e:\\ExamplaApp");
 
         }
 
@@ -35,12 +35,10 @@ namespace BuildScript
                 .AddTask(x => x.IisTasks().CreateAppPoolTask("Example app pool").Mode(CreateApplicationPoolMode.DoNothingIfExists))
                 .AddTask(x => x.IisTasks().ControlAppPoolTask("Example app pool", ControlApplicationPoolAction.Stop).DoNotFailOnError())
                 .Do(UnzipPackage)
-                .AddTask(x => x.CopyDirectoryStructureTask(@"Packages\ExampleApp", @"C:\ExampleApp", true).Retry(20, 5000))
+                .AddTask(x => x.CopyDirectoryStructureTask(@"Packages\ExampleApp", deployPath, true).Retry(20, 5000))
                 .Do(CreateWebSite)
                 .AddTask(x => x.IisTasks().ControlAppPoolTask("Example app pool", ControlApplicationPoolAction.Start));
         }
-
-        
 
         private void UnzipPackage(ITaskContext context)
         {
