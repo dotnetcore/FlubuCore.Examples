@@ -48,7 +48,7 @@ public class BuildScriptSimple : DefaultBuildScript
             .DependsOn(unitTest, package);
     }
 
-    public static void Example(ITargetFluentInterface target)
+    public static void Example(ITarget target)
     {
         target.AddTask(x => x.CompileSolutionTask())
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"));
