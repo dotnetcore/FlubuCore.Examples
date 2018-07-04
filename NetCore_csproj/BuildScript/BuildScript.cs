@@ -10,10 +10,12 @@ using FlubuCore.Context.FluentInterface.TaskExtensions;
 using FlubuCore.Scripting;
 using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
+using RestSharp;
 
 //#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 //#ass ./Packages/Newtonsoft.Json.9.0.1/lib/netstandard1.0/Newtonsoft.Json.dll
 //#imp ./BuildScript/BuildScriptHelper.cs
+//#nuget RestSharp, 106.3.1   
 
 //// Examine build scripts in other projects(especialy mvc .net461 example) for more use cases. Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
 public class MyBuildScript : DefaultBuildScript
@@ -91,17 +93,7 @@ public class MyBuildScript : DefaultBuildScript
         XmlDocument xml = new XmlDocument(); //// Just an a example that external reference works.
         BuildScriptHelper.SomeMethod(); //// Just an a example that referencing other cs file works.
 
-        ////Example of predefined propertie. Propertie are predefined by flubu.
-        var osPlatform = context.Properties.Get<OSPlatform>(PredefinedBuildProperties.OsPlatform);
-
-        if (osPlatform == OSPlatform.Windows)
-        {
-            context.LogInfo("Running on windows");
-        }
-        else if(osPlatform ==OSPlatform.Linux)
-        {
-            context.LogInfo("running on linux");
-        }
+  
     }
 
     private void DoExample2(ITaskContext context)
@@ -115,5 +107,6 @@ public class MyBuildScript : DefaultBuildScript
 
 
         JsonConvert.SerializeObject(example);
+        var client = new RestClient("http://example.com");
     }
 }
