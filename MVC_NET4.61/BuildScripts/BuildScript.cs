@@ -8,9 +8,11 @@ using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
 using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
+using RestSharp;
 
 //#ref System.Xml.XmlDocument, System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 //#ass .\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll
+//#nuget RestSharp, 106.3.1
 //#imp .\BuildScripts\BuildHelper.cs
 
 /// <summary>
@@ -148,6 +150,7 @@ public class BuildScript : DefaultBuildScript
 
     public void DoAsyncExample2(ITaskContext context)
     {
+        var client = new RestClient("http://example.com");
         var exampleSerialization = JsonConvert.SerializeObject("Example serialization");
         var deserialized = JsonConvert.DeserializeObject<string>(exampleSerialization);
         Console.WriteLine(deserialized);

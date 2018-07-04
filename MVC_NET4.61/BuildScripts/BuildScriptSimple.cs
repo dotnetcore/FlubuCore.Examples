@@ -4,10 +4,15 @@ using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
+using Newtonsoft.Json;
+using RestSharp;
+
+//#ass .\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll
+//#nuget RestSharp, 106.3.1
+
 
 /// <summary>
-
-/// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
+/// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);///
 /// Type "build.exe help -s=BuildScriptSimple.cs  in cmd to see help
 /// How to test and debug build script example is in NetCore_csproj project.
 /// </summary>
@@ -21,6 +26,7 @@ public class BuildScriptSimple : DefaultBuildScript
         context.Properties.Set(BuildProps.ProductName, "FlubuExample");
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
         context.Properties.Set(BuildProps.BuildConfiguration, "Release");
+        //// Remove SetDefaultTarget's if u dont't want default to be included or if you want to define them by yourself.
         context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
     }
 
@@ -41,6 +47,8 @@ public class BuildScriptSimple : DefaultBuildScript
 
         session.CreateTarget("test").Do(Example);
 
+        session.CreateTarget("RefExample").Do(RefExample);
+
         session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
             .SetAsDefault()
@@ -52,6 +60,13 @@ public class BuildScriptSimple : DefaultBuildScript
     {
         target.AddTask(x => x.CompileSolutionTask())
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"));
+    }
+
+    public static void RefExample(ITaskContext context)
+    {
+
+        var exampleSerialization = JsonConvert.SerializeObject("Example serialization");
+        var client = new RestClient("http://example.com");
     }
 
     public static void TargetFetchBuildVersion(ITaskContext context)
