@@ -9,6 +9,7 @@ namespace BuildScript.BuildScript
 {
     /// <summary>
     /// You can debug scripts with tests.
+    /// You can use FlubuEngine to use Flubu tasks in any other .net library or application.
     /// </summary>
     public class BuildScriptTests
     {
