@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 /// <summary>
 /// Flubu loads Newtonsoft.json and FlubuCore.PluginExample assembly from FlubuLib directory
-/// If you dont put the into FlubuLib directory you can also refernce them with #ass directive. See wiki - BuildScript fundamentals for more information.
+/// If you dont put the into FlubuLib directory you can also refernce them with #ass or #nuget directive. See wiki - BuildScript fundamentals for more information.
 /// </summary>
 public class BuildScript : DefaultBuildScript
 {
