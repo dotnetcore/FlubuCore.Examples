@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FlubuCore.Context;
 using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Packaging;
@@ -9,7 +10,6 @@ using RestSharp;
 
 //#ass .\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll
 //#nuget RestSharp, 106.3.1
-
 
 /// <summary>
 /// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);///
@@ -26,7 +26,7 @@ public class BuildScriptSimple : DefaultBuildScript
         context.Properties.Set(BuildProps.ProductName, "FlubuExample");
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
         context.Properties.Set(BuildProps.BuildConfiguration, "Release");
-        //// Remove SetDefaultTarget's if u dont't want default to be included or if you want to define them by yourself.
+        //// Remove SetDefaultTarget's if u dont't want default targets to be included or if you want to define them by yourself.
         context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
     }
 
@@ -45,9 +45,17 @@ public class BuildScriptSimple : DefaultBuildScript
             .SetDescription("Packages mvc example for deployment")
             .Do(TargetPackage);
 
-        session.CreateTarget("test").Do(Example);
+       var test = session.CreateTarget("test").Do(Example);
 
-        session.CreateTarget("RefExample").Do(RefExample);
+        var refExample = session.CreateTarget("RefExample").Do(RefExample);
+
+        session.CreateTarget("AsyncExample")
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test", true))
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test2", true))
+            .Do(RefExample)
+            .DoAsync(AsyncExample)
+            .DoAsync(AsyncExample)
+            .DependsOnAsync(test, refExample);
 
         session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
@@ -56,15 +64,20 @@ public class BuildScriptSimple : DefaultBuildScript
             .DependsOn(unitTest, package);
     }
 
-    public static void Example(ITarget target)
+    public void Example(ITarget target)
     {
-        target.AddTask(x => x.CompileSolutionTask())
+        target
+            .AddTask(x => x.CompileSolutionTask())
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"));
     }
 
-    public static void RefExample(ITaskContext context)
+    public async Task AsyncExample(ITaskContext context)
     {
+        await Task.Delay(100);
+    }
 
+    public void RefExample(ITaskContext context)
+    {
         var exampleSerialization = JsonConvert.SerializeObject("Example serialization");
         var client = new RestClient("http://example.com");
     }

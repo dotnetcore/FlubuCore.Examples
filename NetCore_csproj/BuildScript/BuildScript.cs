@@ -53,6 +53,7 @@ public class MyBuildScript : DefaultBuildScript
         //// Can be used instead of CreateZipPackageFromProject. See MVC_NET4.61 project for full example of PackageTask
         //// context.CreateTarget("Package2").AddTask(x => x.PackageTask("FlubuExample"));
 
+        ///// Tasks are runned in parallel. You can do the same with DoAsync and DependsOnAsync and you can also mix Async and Sync tasks
         var test = context.CreateTarget("test")
             .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests"))
             .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests2"));
