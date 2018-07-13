@@ -18,6 +18,12 @@ using RestSharp;
 /// </summary>
 public class BuildScriptSimple : DefaultBuildScript
 {
+    /// <summary>
+    /// Exexcute build.exe -ex=SomeValue.
+    /// </summary>
+    [FromArg("ex", "Just and example" )]
+    public string PassArgumentExample { get; set; }
+
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
     {
         context.Properties.Set(BuildProps.NUnitConsolePath,
@@ -50,9 +56,19 @@ public class BuildScriptSimple : DefaultBuildScript
         var refExample = session.CreateTarget("RefExample").Do(RefExample);
 
         session.CreateTarget("AsyncExample")
-            .AddTaskAsync(x => x.CreateDirectoryTask("Test", true))
-            .AddTaskAsync(x => x.CreateDirectoryTask("Test2", true))
-            .Do(RefExample)
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test", true)
+                .Retry(3)
+                .Finally((c) =>
+                {
+                    c.LogInfo("Do something on finally ");
+                })
+                .OnError((c, e) =>
+                {
+                    c.LogInfo("Do something on error");
+                }))
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test2", true)
+                .DoNotFailOnError())
+            .Do(RefExample).When((c) => true)
             .DoAsync(AsyncExample)
             .DoAsync(AsyncExample)
             .DependsOnAsync(test, refExample);
