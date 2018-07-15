@@ -17,13 +17,12 @@ using RestSharp;
 //#imp ./BuildScript/BuildScriptHelper.cs
 //#nuget RestSharp, 106.3.1   
 
-//// Examine build scripts in other projects.
-///  Especialy https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScriptSimple.cs) for more use cases. Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
+//// Examine build scripts in other projects for more use cases.
+///  Especialy https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScriptSimple.cs)  Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
 public class MyBuildScript : DefaultBuildScript
 {
-    /// <summary>
-    /// Exexcute dotnet flubu -ex=SomeValue.
-    /// </summary>
+
+    //// Exexcute 'dotnet flubu -ex={SomeValue}.'. to pass argument to property. You can also set 'ex' through config file or enviroment variable. See https://github.com/flubu-core/examples/tree/master/ArgumentAndConfigurationPassThroughToTasksExample
     [FromArg("ex", "Just an example" )]
     public string PassArgumentExample { get; set; }
 

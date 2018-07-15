@@ -21,7 +21,7 @@ using RestSharp;
 public class BuildScriptSimple : DefaultBuildScript
 {
 
-    //// Exexcute 'build.exe -ex={SomeValue}.'. to pass argument to property. You can also set 'ex' through config file or enviroment variable.
+    //// Exexcute 'build.exe -ex={SomeValue}.'. to pass argument to property. You can also set 'ex' through config file or enviroment variable. See https://github.com/flubu-core/examples/tree/master/ArgumentAndConfigurationPassThroughToTasksExample
     [FromArg("ex", "Just and example" )]
     public string PassArgumentExample { get; set; }
 
