@@ -54,7 +54,6 @@
   <ItemGroup>
     <Compile Include="BuildHelper.cs" />
     <Compile Include="BuildScript.cs" />
-    <Compile Include="BuildScriptSimple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

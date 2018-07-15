@@ -17,9 +17,16 @@ using RestSharp;
 //#imp ./BuildScript/BuildScriptHelper.cs
 //#nuget RestSharp, 106.3.1   
 
-//// Examine build scripts in other projects(especialy mvc .net461 example) for more use cases. Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
+//// Examine build scripts in other projects.
+///  Especialy https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScriptSimple.cs) for more use cases. Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
 public class MyBuildScript : DefaultBuildScript
 {
+    /// <summary>
+    /// Exexcute dotnet flubu -ex=SomeValue.
+    /// </summary>
+    [FromArg("ex", "Just an example" )]
+    public string PassArgumentExample { get; set; }
+
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
     {
         context.Properties.Set(BuildProps.CompanyName, "Flubu");
@@ -58,16 +65,42 @@ public class MyBuildScript : DefaultBuildScript
             .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests"))
             .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests2"));
 
+        var runExternalProgramExample = context.CreateTarget("run.libz")
+            .AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
+        //// Pass any arguments...
+        //// .WithArguments());
+
         var doExample = context.CreateTarget("DoExample").Do(DoExample);
-        var doExample2 = context.CreateTarget("DoExample2").Do(DoExample2);
+        var doExample2 = context.CreateTarget("DoExample2").Do(DoExample2, "SomeValue");
 
         context.CreateTarget("iis.install").Do(IisInstall);
-
-        //// todo include package into rebuild.
+        
         context.CreateTarget("Rebuild")
             .SetAsDefault()
             .DependsOnAsync(doExample, doExample2)
             .DependsOn(compile, test, package);
+    }
+
+    private void DoExample(ITaskContext context)
+    {
+        XmlDocument xml = new XmlDocument(); //// Just an a example that external reference works.
+        BuildScriptHelper.SomeMethod(); //// Just an a example that referencing other cs file works.
+    }
+
+    private void DoExample2(ITaskContext context, string param)
+    {
+        //// run 'dotnet flubu Rebuild -ex=SomeValue' to pass argument
+        string example = PassArgumentExample;
+        if (string.IsNullOrEmpty(example))
+        {
+            example = "no vaule passed through script argument 'ex'.";
+        }
+
+        context.LogInfo(example);
+
+        //// Just an a example that external reference works.
+        JsonConvert.SerializeObject(example);
+        var client = new RestClient("http://example.com");
     }
 
     public static void IisInstall(ITaskContext context)
@@ -84,30 +117,11 @@ public class MyBuildScript : DefaultBuildScript
             .BindingProtocol("Http")
             .Port(2000)
             .PhysicalPath("SomePhysicalPath")
+            //// Example of ForMember. Can be used on any task method or property.
+            //// execute 'dotnet flubu iis.install --appPool={SomeValue}'. If argument is not passed default value is used in this case 'DefaultAppPollName'
+            .ForMember(x => x.ApplicationPoolName("DefaultAppPollName"), "appPool", "Name of the application pool.")
             .ApplicationPoolName("SomeAppPoolName")
             .WebsiteMode(CreateWebApplicationMode.DoNothingIfExists)
             .Execute(context);
-    }
-
-    private void DoExample(ITaskContext context)
-    {
-        XmlDocument xml = new XmlDocument(); //// Just an a example that external reference works.
-        BuildScriptHelper.SomeMethod(); //// Just an a example that referencing other cs file works.
-
-  
-    }
-
-    private void DoExample2(ITaskContext context)
-    {
-        //// run 'dotnet flubu Rebuild -argName=SomeValue' to pass argument
-        var example = context.ScriptArgs["argName"];
-        if (string.IsNullOrEmpty(example))
-        {
-            example = "no vaule through script argument argName";
-        }
-
-
-        JsonConvert.SerializeObject(example);
-        var client = new RestClient("http://example.com");
     }
 }

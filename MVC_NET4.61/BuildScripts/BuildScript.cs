@@ -1,27 +1,30 @@
-﻿using System.Collections.Generic;
-using System;
-using System.IO;
+﻿using System;
+using System.Threading.Tasks;
 using System.Xml;
 using FlubuCore.Context;
+using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
-using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
 using RestSharp;
 
-//#ref System.Xml.XmlDocument, System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
 //#ass .\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll
 //#nuget RestSharp, 106.3.1
 //#imp .\BuildScripts\BuildHelper.cs
 
 /// <summary>
-/// Flubu build script example for .net. Flubu Default targets for .net are not included.
-/// Most of them are created in this buildScipt tho. (load.solution, generate,commonAssinfo, compile) as a build script example
-/// How to test and debug build script example is in NetCore_csproj project. 
+/// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);///
+/// Type "build.exe help -s=BuildScriptSimple.cs  in cmd to see help
+/// See other examples at https://github.com/flubu-core/examples
 /// </summary>
-public class BuildScript : DefaultBuildScript
+public class BuildScriptSimple : DefaultBuildScript
 {
+
+    //// Exexcute 'build.exe -ex={SomeValue}.'. to pass argument to property. You can also set 'ex' through config file or enviroment variable.
+    [FromArg("ex", "Just and example" )]
+    public string PassArgumentExample { get; set; }
+
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
     {
         context.Properties.Set(BuildProps.NUnitConsolePath,
@@ -30,95 +33,95 @@ public class BuildScript : DefaultBuildScript
         context.Properties.Set(BuildProps.ProductName, "FlubuExample");
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
         context.Properties.Set(BuildProps.BuildConfiguration, "Release");
+        //// Remove SetDefaultTarget's if u dont't want default targets to be included or if you want to define them by yourself.
+        context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
     }
 
     protected override void ConfigureTargets(ITaskContext session)
     {
-        var loadSolution = session.CreateTarget("load.solution")
-            .SetAsHidden()
-            .AddTask(x => x.LoadSolutionTask());
-
         var updateVersion = session.CreateTarget("update.version")
-            .DependsOn(loadSolution)
-            .SetAsHidden()
-            .Do(TargetFetchBuildVersion);
-
-        session.CreateTarget("generate.commonassinfo")
-            .SetDescription("Generates common assembly info")
-            .DependsOn(updateVersion)
-            .AddTask(x => x.GenerateCommonAssemblyInfoTask());
-
-        var compile = session.CreateTarget("compile")
-            .SetDescription("Compiles the solution.")
-            .AddTask(x => x.CompileSolutionTask()
-                ////ForMember example: run build.exe compile -c=Debug to pass argument to build configuration. If -c is not specified default specifued value is used. 
-                /// Rum build.exe compile help for detailed target help with all arguments you can pass through to target.
-                /// this is just example and in real scenario is recomended to set BuildConfiguration only through build properties as other tasks might use it.  
-                .ForMember(y => y.BuildConfiguration("Release"), "c", "The build configuration solution will be build."))
-            .DependsOn("generate.commonassinfo");
+            .Do(TargetFetchBuildVersion)
+            .SetAsHidden();
 
         var unitTest = session.CreateTarget("unit.tests")
             .SetDescription("Runs unit tests")
-            .DependsOn(loadSolution)
             .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
-            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests2"));
-
-        var runExternalProgramExample = session.CreateTarget("run.libz")
-            .AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
-            //// Pass any arguments...
-            //// .WithArguments());
+            .DependsOn("load.solution");
 
         var package = session.CreateTarget("Package")
             .SetDescription("Packages mvc example for deployment")
             .Do(TargetPackage);
-        
-       var rebuild = session.CreateTarget("Rebuild")
+
+        session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
             .SetAsDefault()
-            .DependsOn(compile, unitTest, package);
+            .DependsOn("compile") //// compile is included as one of the default targets.
+            .DependsOn(unitTest, package);
 
-        var refAssemblyExample = session.CreateTarget("Referenced.Assembly.Example").Do(TargetReferenceAssemblyExample);
+        //// Below are dummy examples of what flubu can do.
 
-        ////Run build.exe Rebuild.Server -exampleArg=someValue to pass to argument
-        var doAsyncExample = session.CreateTarget("DoAsync.Example")
-           .DoAsync((Action<ITaskContextInternal, string>)DoAsyncExample, session.ScriptArgs["exampleArg"])
-           .DoAsync((Action<ITaskContextInternal>)DoAsyncExample2);
-  
-        session.CreateTarget("iis.install").Do(IisInstall);
+       var test = session.CreateTarget("test").Do(ReuseOfTargetExample, "FlubuExample.Tests");
+       var test2 = session.CreateTarget("test2").Do(ReuseOfTargetExample, "FlubuExample.Tests2");
 
-        session.CreateTarget("Rebuild.Server")
-          .SetDescription("Rebuilds the solution with some additional examples.")
-          .DependsOn(rebuild, refAssemblyExample, doAsyncExample);
+        var runExternalProgramExample = session.CreateTarget("run.libz")
+            .AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
+        //// Pass any arguments...
+        //// .WithArguments());
+
+        var refExample = session.CreateTarget("RefExample").Do(RefExample);
+
+        session.CreateTarget("AsyncExample")
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test", true)
+                .Retry(3)
+                .Finally((c) =>
+                {
+                    c.LogInfo("Do something on finally ");
+                })
+                .OnError((c, e) =>
+                {
+                    c.LogInfo("Do something on error");
+                }))
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test2", true)
+                .DoNotFailOnError())
+            .Do(RefExample).When((c) => true)
+            .DoAsync(AsyncExample)
+            .DoAsync(AsyncExample)
+            .DependsOnAsync(test, test2);
+    }
+    
+    /// See deployment example for real scenario example
+    public void ReuseOfTargetExample(ITarget target, string projectToTest)
+    {
+        target
+            .AddTask(x => x.CompileSolutionTask())
+            .AddTask(x => x.NUnitTaskForNunitV3(projectToTest));
     }
 
-    public static void IisInstall(ITaskContext context)
+    public async Task AsyncExample(ITaskContext context)
     {
-        context.Tasks().IisTasks().CreateAppPoolTask("SomeAppPoolName")
-            .ManagedRuntimeVersion("No Managed Code")
-            .Mode(CreateApplicationPoolMode.DoNothingIfExists)
-            .Execute(context);
+        await Task.Delay(100);
+    }
 
-        context.Tasks()
-            .IisTasks()
-            .CreateWebsiteTask()
-            .WebsiteName("SomeWebSiteName")
-            .BindingProtocol("Http")
-            .Port(2000)
-            .PhysicalPath("SomePhysicalPath")
-            .ApplicationPoolName("SomeAppPoolName")
-            .WebsiteMode(CreateWebApplicationMode.DoNothingIfExists)
-            .Execute(context);
+    public void RefExample(ITaskContext context)
+    {
+        //// Just an example that using of other .cs files work.
+        BuildHelper.SomeMethod();
+
+        //// Just an example that referencing external assemblies work.
+        var exampleSerialization = JsonConvert.SerializeObject("Example serialization");
+        var client = new RestClient("http://example.com");
     }
 
     public static void TargetFetchBuildVersion(ITaskContext context)
     {
         var version = context.Tasks().FetchBuildVersionFromFileTask().Execute(context);
+     
         int svnRevisionNumber = 0; //in real scenario you would fetch revision number from subversion.
         int buildNumber = 0; // in real scenario you would fetch build version from build server.
-        version = new System.Version(version.Major, version.Minor, buildNumber, svnRevisionNumber);
+        version = new Version(version.Major, version.Minor, buildNumber, svnRevisionNumber);
         context.Properties.Set(BuildProps.BuildVersion, version);
     }
- 
+
     public static void TargetPackage(ITaskContext context)
     {
         FilterCollection installBinFilters = new FilterCollection();
@@ -132,34 +135,7 @@ public class BuildScript : DefaultBuildScript
             .AddDirectoryToPackage("FlubuExample\\Images", "FlubuExample\\Images", true)
             .AddDirectoryToPackage("FlubuExample\\Scripts", "FlubuExample\\Scripts", true)
             .AddDirectoryToPackage("FlubuExample\\Views", "FlubuExample\\Views", true)
-            .ZipPackage("FlubuExample.zip")
+            .ForMember(x => x .ZipPackage("FlubuExample.zip", true, 3), "-fn", "Zip package file name.")
             .Execute(context);
-    }
-
-    public void TargetReferenceAssemblyExample(ITaskContext context)
-    {
-        ////How to get Assembly Qualified name for #ref
-        /// typeof(XmlDocument).AssemblyQualifiedName;
-        XmlDocument xml = new XmlDocument();
-    }
-
-    public void DoAsyncExample(ITaskContext context, string param)
-    {
-        Console.WriteLine(string.Format("Example {0}", param));
-    }
-
-    public void DoAsyncExample2(ITaskContext context)
-    {
-        var client = new RestClient("http://example.com");
-        var exampleSerialization = JsonConvert.SerializeObject("Example serialization");
-        var deserialized = JsonConvert.DeserializeObject<string>(exampleSerialization);
-        Console.WriteLine(deserialized);
-    
-        ExternalMethodExample();
-    }
-
-    public void ExternalMethodExample()
-    {
-        BuildHelper.SomeMethod();
     }
 }
