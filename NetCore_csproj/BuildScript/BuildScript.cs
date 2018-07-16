@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Xml;
 using FlubuCore.Context;
+using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Context.FluentInterface.TaskExtensions;
 using FlubuCore.Scripting;
 using FlubuCore.Tasks.Iis;
@@ -18,12 +19,11 @@ using RestSharp;
 //#nuget RestSharp, 106.3.1   
 
 //// Examine build scripts in other projects for more use cases.
-///  Especialy https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScriptSimple.cs)  Also see FlubuCore buildscript on https://github.com/flubu-core/flubu.core/blob/master/BuildScript/BuildScript.cs
 public class MyBuildScript : DefaultBuildScript
 {
 
     //// Exexcute 'dotnet flubu -ex={SomeValue}.'. to pass argument to property. You can also set 'ex' through config file or enviroment variable. See https://github.com/flubu-core/examples/tree/master/ArgumentAndConfigurationPassThroughToTasksExample
-    [FromArg("ex", "Just an example" )]
+    [FromArg("ex", "Just an example." )]
     public string PassArgumentExample { get; set; }
 
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
@@ -72,6 +72,10 @@ public class MyBuildScript : DefaultBuildScript
         var doExample = context.CreateTarget("DoExample").Do(DoExample);
         var doExample2 = context.CreateTarget("DoExample2").Do(DoExample2, "SomeValue");
 
+        context.CreateTarget("ReuseSetOfTargetsExample")
+            .Do(ReuseSetOfTargetsExample, "Dir1", "Dir2")
+            .Do(ReuseSetOfTargetsExample, "Dir3", "Dir4");
+
         context.CreateTarget("iis.install").Do(IisInstall);
         
         context.CreateTarget("Rebuild")
@@ -100,6 +104,29 @@ public class MyBuildScript : DefaultBuildScript
         //// Just an a example that external reference works.
         JsonConvert.SerializeObject(example);
         var client = new RestClient("http://example.com");
+    }
+
+    //// See deployment example for real use case. You can also apply attribute Target on method. https://github.com/flubu-core/flubu.core/wiki/2-Build-script-fundamentals#Targets
+    private void ReuseSetOfTargetsExample(ITarget target, string directoryName, string directoryName2)
+    {
+        //// Retry, When, OnError, Finally, ForMember, NoLog, DoNotFailOnError can be applied on all tasks.
+        target.AddTask(x =>
+                x.CreateDirectoryTask(directoryName, true).OnError((c, e) => c.LogInfo("Dummy example of onError.")))
+            .When(c => true)
+            .AddTask(x => x.CreateDirectoryTask(directoryName2, true).Finally(c => c.LogInfo("Dummy example of finally.")))
+            ////You can group task and apply When, OnError, Finally on group of tasks. .
+            .Group(
+                t =>
+                {
+                    t.AddTask(x => x.DeleteDirectoryTask(directoryName, false).DoNotFailOnError().NoLog());
+                    t.AddTask(x => x.DeleteDirectoryTask(directoryName2, true).Retry(3, 1000));
+                },
+                onFinally: c =>
+                {
+                    c.LogInfo("Dummy example of OnFinally and When on group of tasks.");
+                },
+                when: c => true
+            );
     }
 
     public static void IisInstall(ITaskContext context)

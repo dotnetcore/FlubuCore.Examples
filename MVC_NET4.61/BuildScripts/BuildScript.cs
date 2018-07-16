@@ -6,6 +6,7 @@ using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
+using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -15,14 +16,14 @@ using RestSharp;
 
 /// <summary>
 /// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);///
-/// Type "build.exe help -s=BuildScriptSimple.cs  in cmd to see help
-/// See other examples at https://github.com/flubu-core/examples
+/// Type "build.exe help in cmd to see help
+/// Examine build scripts in other projects for more use cases.
 /// </summary>
 public class BuildScriptSimple : DefaultBuildScript
 {
 
     //// Exexcute 'build.exe -ex={SomeValue}.'. to pass argument to property. You can also set 'ex' through config file or enviroment variable. See https://github.com/flubu-core/examples/tree/master/ArgumentAndConfigurationPassThroughToTasksExample
-    [FromArg("ex", "Just and example" )]
+    [FromArg("ex", "Just an example." )]
     public string PassArgumentExample { get; set; }
 
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
@@ -60,9 +61,6 @@ public class BuildScriptSimple : DefaultBuildScript
 
         //// Below are dummy examples of what flubu can do.
 
-       var test = session.CreateTarget("test").Do(ReuseOfTargetExample, "FlubuExample.Tests");
-       var test2 = session.CreateTarget("test2").Do(ReuseOfTargetExample, "FlubuExample.Tests2");
-
         var runExternalProgramExample = session.CreateTarget("run.libz")
             .AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
         //// Pass any arguments...
@@ -70,34 +68,22 @@ public class BuildScriptSimple : DefaultBuildScript
 
         var refExample = session.CreateTarget("RefExample").Do(RefExample);
 
+        session.CreateTarget("iis.install").Do(IisInstall);
+
+        session.CreateTarget("ReuseSetOfTargetsExample")
+            .Do(ReuseSetOfTargetsExample, "Dir1", "Dir2")
+            .Do(ReuseSetOfTargetsExample, "Dir3", "Dir4");
+
         session.CreateTarget("AsyncExample")
-            .AddTaskAsync(x => x.CreateDirectoryTask("Test", true)
-                .Retry(3)
-                .Finally((c) =>
-                {
-                    c.LogInfo("Do something on finally ");
-                })
-                .OnError((c, e) =>
-                {
-                    c.LogInfo("Do something on error");
-                }))
-            .AddTaskAsync(x => x.CreateDirectoryTask("Test2", true)
-                .DoNotFailOnError())
-            .Do(RefExample).When((c) => true)
-            .DoAsync(AsyncExample)
-            .DoAsync(AsyncExample)
-            .DependsOnAsync(test, test2);
-    }
-    
-    /// See deployment example for real scenario example
-    public void ReuseOfTargetExample(ITarget target, string projectToTest)
-    {
-        target
-            .AddTask(x => x.CompileSolutionTask())
-            .AddTask(x => x.NUnitTaskForNunitV3(projectToTest));
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test", true))
+            .AddTaskAsync(x => x.CreateDirectoryTask("Test2", true))
+            .Do(RefExample)
+            .DoAsync(AsyncExample, "exampleValue1")
+            .DoAsync(AsyncExample, "examplevalue2")
+            .DependsOnAsync(refExample, runExternalProgramExample);
     }
 
-    public async Task AsyncExample(ITaskContext context)
+    public async Task AsyncExample(ITaskContext context, string exampleParamInDoTask)
     {
         await Task.Delay(100);
     }
@@ -110,6 +96,29 @@ public class BuildScriptSimple : DefaultBuildScript
         //// Just an example that referencing external assemblies work.
         var exampleSerialization = JsonConvert.SerializeObject("Example serialization");
         var client = new RestClient("http://example.com");
+    }
+
+    //// See deployment example for real use case. You can also apply attribute Target on method. https://github.com/flubu-core/flubu.core/wiki/2-Build-script-fundamentals#Targets
+    private void ReuseSetOfTargetsExample(ITarget target, string directoryName, string directoryName2)
+    {
+        //// Retry, When, OnError, Finally, ForMember, NoLog, DoNotFailOnError can be applied on all tasks.
+        target.AddTask(x =>
+                x.CreateDirectoryTask(directoryName, true).OnError((c, e) => c.LogInfo("Dummy example of onError.")))
+            .When(c => true)
+            .AddTask(x => x.CreateDirectoryTask(directoryName2, true).Finally(c => c.LogInfo("Dummy example of finally.")))
+            ////You can group task and apply When, OnError, Finally on group of tasks. .
+            .Group(
+                t =>
+                {
+                    t.AddTask(x => x.DeleteDirectoryTask(directoryName, false).DoNotFailOnError().NoLog());
+                    t.AddTask(x => x.DeleteDirectoryTask(directoryName2, true).Retry(3, 1000));
+                },
+                onFinally: c =>
+                {
+                    c.LogInfo("Dummy example of OnFinally and When on group of tasks.");
+                },
+                when: c => true
+            );
     }
 
     public static void TargetFetchBuildVersion(ITaskContext context)
@@ -136,6 +145,28 @@ public class BuildScriptSimple : DefaultBuildScript
             .AddDirectoryToPackage("FlubuExample\\Scripts", "FlubuExample\\Scripts", true)
             .AddDirectoryToPackage("FlubuExample\\Views", "FlubuExample\\Views", true)
             .ForMember(x => x .ZipPackage("FlubuExample.zip", true, 3), "-fn", "Zip package file name.")
+            .Execute(context);
+    }
+
+    public static void IisInstall(ITaskContext context)
+    {
+        context.Tasks().IisTasks()
+            .CreateAppPoolTask("SomeAppPoolName")
+            .ManagedRuntimeVersion("No Managed Code")
+            .Mode(CreateApplicationPoolMode.DoNothingIfExists)
+            .Execute(context);
+
+        context.Tasks().IisTasks()
+            .CreateWebsiteTask()
+            .WebsiteName("SomeWebSiteName")
+            .BindingProtocol("Http")
+            .Port(2000)
+            .PhysicalPath("SomePhysicalPath")
+            //// Example of ForMember. Can be used on any task method or property.
+            //// execute 'dotnet flubu iis.install --appPool={SomeValue}'. If argument is not passed default value is used in this case 'DefaultAppPollName'
+            .ForMember(x => x.ApplicationPoolName("DefaultAppPollName"), "appPool", "Name of the application pool.")
+            .ApplicationPoolName("SomeAppPoolName")
+            .WebsiteMode(CreateWebApplicationMode.DoNothingIfExists)
             .Execute(context);
     }
 }
