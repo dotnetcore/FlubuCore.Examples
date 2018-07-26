@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using FlubuCore.Scripting;
+using FlubuCore.Tasks.Solution;
 using Xunit;
 
 namespace BuildScript.BuildScript
 {
     /// <summary>
     /// You can debug scripts with tests.
-    /// You can use FlubuEngine to use Flubu tasks in any other .net library or application.
+    /// You can use FlubuEngine to use Flubu tasks in any other .net library or application. See HowToUseTaskInOtherNetApplication test.
     /// </summary>
     public class BuildScriptTests
     {
@@ -52,8 +53,16 @@ namespace BuildScript.BuildScript
             IFlubuEngine engine = new FlubuEngine();
 
             var session = engine.CreateTaskSession(new BuildScriptArguments());
-            bs.CreateFile(session);
             Assert.True(File.Exists("test123.txt"));
+        }
+
+        [Fact]
+        public void HowToUseTaskInOtherNetApplication()
+        {
+            //// 
+            IFlubuEngine engine = new FlubuEngine();
+            var session = engine.CreateTaskSession(new BuildScriptArguments());
+            session.Tasks().DeleteDirectoryTask("Example", true).Execute(session);
         }
     }
 }
