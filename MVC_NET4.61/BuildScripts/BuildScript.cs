@@ -71,8 +71,8 @@ public class BuildScriptSimple : DefaultBuildScript
         session.CreateTarget("iis.install").Do(IisInstall);
 
         session.CreateTarget("ReuseSetOfTargetsExample")
-            .Do(ReuseSetOfTargetsExample, "Dir1", "Dir2")
-            .Do(ReuseSetOfTargetsExample, "Dir3", "Dir4");
+            .AddTasks(ReuseSetOfTargetsExample, "Dir1", "Dir2")
+            .AddTasks(ReuseSetOfTargetsExample, "Dir3", "Dir4");
 
         session.CreateTarget("AsyncExample")
             .AddTaskAsync(x => x.CreateDirectoryTask("Test", true))
