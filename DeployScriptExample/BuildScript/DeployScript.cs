@@ -21,15 +21,15 @@ namespace BuildScript
 
         protected override void ConfigureTargets(ITaskContext session)
         {
-            session.CreateTarget("deploy.local").Do(Deploy, "c:\\ExamplaApp").SetAsDefault();
+            session.CreateTarget("deploy.local").AddTasks(Deploy, "c:\\ExamplaApp").SetAsDefault();
 
-            session.CreateTarget("deploy.test").Do(Deploy, "d:\\ExamplaApp");
+            session.CreateTarget("deploy.test").AddTasks(Deploy, "d:\\ExamplaApp");
 
-            session.CreateTarget("deploy.prod").Do(Deploy, "e:\\ExamplaApp");
+            session.CreateTarget("deploy.prod").AddTasks(Deploy, "e:\\ExamplaApp");
 
         }
 
-        private void Deploy(ITargetFluentInterface target, string deployPath)
+        private void Deploy(ITarget target, string deployPath)
         {
             target
                 .AddTask(x => x.IisTasks().CreateAppPoolTask("Example app pool").Mode(CreateApplicationPoolMode.DoNothingIfExists))
