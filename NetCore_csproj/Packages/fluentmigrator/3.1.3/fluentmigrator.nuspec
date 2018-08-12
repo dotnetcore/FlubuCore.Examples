@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="3.5">
+    <id>FluentMigrator</id>
+    <version>3.1.3</version>
+    <authors>Sean Chambers,Josh Coffman,Tom Marien,Mark Junker</authors>
+    <owners>Sean Chambers,Josh Coffman,Tom Marien,Mark Junker</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/fluentmigrator/fluentmigrator/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/fluentmigrator/fluentmigrator/wiki</projectUrl>
+    <iconUrl>https://github.com/fluentmigrator/fluentmigrator/raw/develop/docs/logo.png</iconUrl>
+    <description>FluentMigrator is a database migration framework for .NET written in C#. The basic idea is that you can create migrations which are simply classes that derive from the Migration base class and have a Migration attribute with a unique version number attached to them. Upon executing FluentMigrator, you tell it which version to migrate to and it will run all necessary migrations in order to bring your database up to that version. In addition to forward migration support, FluentMigrator also supports different ways to execute the migrations along with selective migrations called profiles and executing arbitrary SQL.</description>
+    <releaseNotes>Use of standard dependency injection, configuration and logging libraries.
+Simplification of in-process runner configuration and instantiation.
+dotnet-fm is now a global .NET Core 2.1 tool.
+Minimum .NET Framework version is 4.6.1.
+
+Details: https://github.com/fluentmigrator/fluentmigrator/releases</releaseNotes>
+    <copyright>Sean Chambers and the FluentMigrator project 2008-2018</copyright>
+    <tags>fluent migrator fluentmigrator migration database</tags>
+    <repository type="git" url="https://github.com/fluentmigrator/fluentmigrator.git" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.1">
+        <dependency id="FluentMigrator.Abstractions" version="3.1.3" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Options" version="2.0.1" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="FluentMigrator.Abstractions" version="3.1.3" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="2.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Options" version="2.0.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,1841 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FluentMigrator</name>
+    </assembly>
+    <members>
+        <member name="T:FluentMigrator.AutoReversingMigration">
+            <summary>
+            A migration base class that will automatically generate the down expressions
+            </summary>
+            <remarks>
+            This only works for some expressions like CREATE TABLE, but not for DROP TABLE.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.AutoReversingMigration.Down">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.AutoReversingMigration.GetDownExpressions(FluentMigrator.Infrastructure.IMigrationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.AutoScriptMigration">
+            <summary>
+            Migration that automatically uses embedded SQL scripts depending on the database type name
+            </summary>
+            <remarks>
+            The embedded SQL scripts must end in <c>Scripts.{Direction}.{Version}_{DerivedTypeName}_{DatabaseType}.sql</c>.
+            <para>The <c>{Direction}</c> can be <c>Up</c> or <c>Down</c>.</para>
+            <para>The <c>{Version}</c> is the migration version.</para>
+            <para>The <c>{DerivedTypeName}</c> is the name of the type derived from <see cref="T:FluentMigrator.AutoScriptMigration"/>.</para>
+            <para>The <c>{DatabaseType}</c> is the database type name. For SQL Server 2016, the variants <c>SqlServer2016</c>,
+            <c>SqlServer</c>, and <c>Generic</c> will be tested.</para>
+            <para>The behavior may be overriden by providing a custom <c>FluentMigrator.Runner.Conventions.IAutoNameConvention</c>.</para>
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.AutoScriptMigration.Up">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.AutoScriptMigration.Down">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.AutoScriptMigration.ExecuteEmbeddedAutoSqlScriptExpression.MigrationAssemblies">
+            <summary>
+            Gets or sets the migration assemblies
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.AutoScriptMigration.ExecuteEmbeddedAutoSqlScriptExpression.ExecuteWith(FluentMigrator.IMigrationProcessor)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.AutoScriptMigration.ExecuteEmbeddedAutoSqlScriptExpression.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Alter.AlterExpressionRoot">
+            <summary>
+            The root expression for alterations
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.AlterExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Alter.AlterExpressionRoot"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.AlterExpressionRoot.Table(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.AlterExpressionRoot.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.AlterColumnExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.#ctor(FluentMigrator.Expressions.AlterColumnExpression,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.CurrentForeignKey">
+            <summary>
+            Gets or sets the current foreign key
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ColumnHelper">
+            <summary>
+            Gets or sets a column expression builder helper
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.WithDefault(FluentMigrator.SystemMethods)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.WithDefaultValue(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.WithColumnDescription(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.Identity">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.Indexed">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.Indexed(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.PrimaryKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.PrimaryKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.Nullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.NotNullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.Unique">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.Unique(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ForeignKey(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ForeignKey(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ForeignKey(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ReferencedBy(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ReferencedBy(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ReferencedBy(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.ForeignKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.GetColumnForType">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.OnDelete(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.OnUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.OnDeleteOrUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#SchemaName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#TableName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Column.AlterColumnExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#Column">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.AlterTableExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.#ctor(FluentMigrator.Expressions.AlterTableExpression,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.CurrentColumn">
+            <summary>
+            Gets or sets the current column definition
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.CurrentForeignKey">
+            <summary>
+            Gets or sets the current foreign key
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ColumnHelper">
+            <summary>
+            Gets or sets a column expression builder helper
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ToSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.WithDescription(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.AddColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.AlterColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.WithDefault(FluentMigrator.SystemMethods)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.WithDefaultValue(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.SetExistingRowsTo(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.WithColumnDescription(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.Identity">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.Indexed">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.Indexed(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.PrimaryKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.PrimaryKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.Nullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.NotNullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.Unique">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.Unique(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ForeignKey(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ForeignKey(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ForeignKey(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ReferencedBy(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ReferencedBy(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ReferencedBy(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.ForeignKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.OnDelete(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.OnUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.OnDeleteOrUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.GetColumnForType">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#SchemaName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#TableName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Alter.Table.AlterTableExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#Column">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.ColumnExpressionBuilderHelper">
+            <summary>
+            This class provides a common location for logic pertaining to setting and maintaining
+            expressions for expression builders which manipulate the the ColumnDefinition.
+            </summary>
+            <remarks>
+            This is a support class for the migrator framework and is not intended for external use.
+            TODO: make this internal, and the change assmebly info so InternalsVisibleTo is set for the test assemblies.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.ColumnExpressionBuilderHelper"/> class.
+            </summary>
+            <remarks>
+            This constructor exists only to ease creating mock objects.
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.#ctor(FluentMigrator.Builders.IColumnExpressionBuilder,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.ColumnExpressionBuilderHelper"/> class.
+            </summary>
+            <param name="builder">The expression builder</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.SetNullable(System.Boolean)">
+            <summary>
+            Either updates the IsNullable flag on the column, or creates/removes the SetNotNull expression, depending
+            on whether the column has a 'Set existing rows' expression.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.SetExistingRowsTo(System.Object)">
+            <summary>
+            Adds the existing row default value.  If the column has a value for IsNullable, this will also
+            call SetNullable to create the expression, and will then set the column IsNullable to false.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.Unique(System.String)">
+            <summary>
+            Creates a new CREATE INDEX expression to create a new unique index
+            </summary>
+            <param name="indexName">The new name of the index</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.ColumnExpressionBuilderHelper.Indexed(System.String)">
+            <summary>
+            Creates a new CREATE INDEX expression
+            </summary>
+            <param name="indexName">The index name</param>
+        </member>
+        <member name="T:FluentMigrator.Builders.ColumnExpressionBuilderHelper.ExistingRowsData">
+            <summary>
+            For each distinct column which has an existing row default, an instance of this
+            will be stored in the _expressionsByColumn.
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.CreateColumnExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateColumnExpression,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.CurrentForeignKey">
+            <summary>
+            Gets or sets the current foreign key
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ColumnHelper">
+            <summary>
+            Gets or sets the column helper for the current column
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.WithDefault(FluentMigrator.SystemMethods)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.WithDefaultValue(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.SetExistingRowsTo(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.WithColumnDescription(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.Identity">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.Indexed">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.Indexed(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.PrimaryKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.PrimaryKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.Nullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.NotNullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.Unique">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.Unique(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ForeignKey(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ForeignKey(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ForeignKey(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ReferencedBy(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ReferencedBy(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ReferencedBy(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.ForeignKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.OnDelete(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.OnUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.OnDeleteOrUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.GetColumnForType">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#SchemaName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#TableName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Column.CreateColumnExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#Column">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.CreateConstraintExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateConstraintExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CreateConstraintExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder.AdditionalFeatures">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder.OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder.Columns(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Constraint.CreateConstraintExpressionBuilder.WithSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.CreateExpressionRoot">
+            <summary>
+            The <see cref="T:FluentMigrator.Builders.Create.ICreateExpressionRoot"/> implementation
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Create.CreateExpressionRoot"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.Schema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.Table(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.ForeignKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.ForeignKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.Index">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.Index(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.Sequence(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.UniqueConstraint">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.UniqueConstraint(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.PrimaryKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.CreateExpressionRoot.PrimaryKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.CreateForeignKeyExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateForeignKeyExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.FromTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.ForeignColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.ForeignColumns(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.FluentMigrator#Builders#Create#ForeignKey#ICreateForeignKeyForeignColumnOrInSchemaSyntax#InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.ToTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.PrimaryColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.PrimaryColumns(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.OnDelete(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.OnUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.OnDeleteOrUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.ForeignKey.CreateForeignKeyExpressionBuilder.FluentMigrator#Builders#Create#ForeignKey#ICreateForeignKeyPrimaryColumnOrInSchemaSyntax#InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.CreateIndexExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateIndexExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.AdditionalFeatures">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.CurrentColumn">
+            <summary>
+            Gets or sets the current index column definition
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.OnColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.WithOptions">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.Ascending">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.Descending">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.Unique">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.FluentMigrator#Builders#Create#Index#ICreateIndexOptionsSyntax#Unique">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.NonClustered">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Index.CreateIndexExpressionBuilder.Clustered">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.Schema.CreateSchemaExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.CreateSchemaExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Schema.CreateSchemaExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateSchemaExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Create.Schema.CreateSchemaExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Schema.CreateSchemaExpressionBuilder.AdditionalFeatures">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.CreateSchemaExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateSequenceExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.IncrementBy(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.MinValue(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.MaxValue(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.StartWith(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.Cache(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.Cycle">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Sequence.CreateSequenceExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.CreateTableExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.#ctor(FluentMigrator.Expressions.CreateTableExpression,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.CurrentColumn">
+            <summary>
+            Gets or sets the current column definition
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.CurrentForeignKey">
+            <summary>
+            Gets or sets the current foreign key definition
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ColumnHelper">
+            <summary>
+            Gets or sets the column expression builder helper
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.WithColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.WithDescription(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.WithDefault(FluentMigrator.SystemMethods)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.WithDefaultValue(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.WithColumnDescription(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.Identity">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.Indexed">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.Indexed(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.PrimaryKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.PrimaryKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.Nullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.NotNullable">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.Unique">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.Unique(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ForeignKey(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ForeignKey(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ForeignKey(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ReferencedBy(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ReferencedBy(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ReferencedBy(System.String,System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.ForeignKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.GetColumnForType">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.OnDelete(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.OnUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.OnDeleteOrUpdate(System.Data.Rule)">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#SchemaName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#TableName">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder.FluentMigrator#Builders#IColumnExpressionBuilder#Column">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.Column.DeleteColumnExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteColumnExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Column.DeleteColumnExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteColumnExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.Column.DeleteColumnExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Column.DeleteColumnExpressionBuilder.FromTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Column.DeleteColumnExpressionBuilder.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Column.DeleteColumnExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteColumnExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteConstraintExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CreateConstraintExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder.AdditionalFeatures">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder.FromTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Constraint.DeleteConstraintExpressionBuilder.Columns(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.DefaultConstraint.DeleteDefaultConstraintExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteDefaultConstraintExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DefaultConstraint.DeleteDefaultConstraintExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteDefaultConstraintExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.DefaultConstraint.DeleteDefaultConstraintExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DefaultConstraint.DeleteDefaultConstraintExpressionBuilder.OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DefaultConstraint.DeleteDefaultConstraintExpressionBuilder.OnColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DefaultConstraint.DeleteDefaultConstraintExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.DeleteDataExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteDataExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteDataExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteDataExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.DeleteDataExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteDataExpressionBuilder.IsNull(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteDataExpressionBuilder.Row(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteDataExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteDataExpressionBuilder.AllRows">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.DeleteExpressionRoot">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Delete.IDeleteExpressionRoot"/> interface
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.DeleteExpressionRoot"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.Schema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.Table(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.ForeignKey">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.ForeignKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.FromTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.Index(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.Index">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.Sequence(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.PrimaryKey(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.UniqueConstraint(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.UniqueConstraint">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.DeleteExpressionRoot.DefaultConstraint">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteForeignKeyExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteForeignKeyExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.FromTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.ForeignColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.ForeignColumns(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.ToTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.PrimaryColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.PrimaryColumns(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.FluentMigrator#Builders#Delete#ForeignKey#IDeleteForeignKeyOnTableSyntax#OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.ForeignKey.DeleteForeignKeyExpressionBuilder.FluentMigrator#Builders#IInSchemaSyntax#InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteIndexExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteIndexExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.CurrentColumn">
+            <summary>
+            Gets or sets the current column
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.AdditionalFeatures">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.OnColumn(System.String)">
+            <summary>
+            Defines the column of the index to delete
+            </summary>
+            <param name="columnName">The column name</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.OnColumns(System.String[])">
+            <summary>
+            Defines the columns of the index to delete
+            </summary>
+            <param name="columnNames">The column names</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.FluentMigrator#Builders#Delete#Index#IDeleteIndexOnColumnSyntax#OnColumns(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.FluentMigrator#Builders#Delete#Index#IDeleteIndexOnColumnSyntax#OnColumn(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Index.DeleteIndexExpressionBuilder.WithOptions">
+            <summary>
+            Define additional index options
+            </summary>
+            <returns>The extension point for additional options</returns>
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.Sequence.DeleteSequenceExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteSequenceExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Sequence.DeleteSequenceExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteSequenceExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.Sequence.DeleteSequenceExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Sequence.DeleteSequenceExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Delete.Table.DeleteTableExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.DeleteTableExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Table.DeleteTableExpressionBuilder.#ctor(FluentMigrator.Expressions.DeleteTableExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Delete.Table.DeleteTableExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Delete.Table.DeleteTableExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Execute.ExecuteExpressionRoot">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Execute.IExecuteExpressionRoot"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Execute.ExecuteExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Execute.ExecuteExpressionRoot"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Execute.ExecuteExpressionRoot.Sql(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Execute.ExecuteExpressionRoot.Script(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Execute.ExecuteExpressionRoot.Script(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Execute.ExecuteExpressionRoot.WithConnection(System.Action{System.Data.IDbConnection,System.Data.IDbTransaction})">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Execute.ExecuteExpressionRoot.EmbeddedScript(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Execute.ExecuteExpressionRoot.EmbeddedScript(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.ExpressionBuilderBase`1">
+            <summary>
+            The base class for builders with underlying expressions
+            </summary>
+            <typeparam name="T">A type that implements <see cref="T:FluentMigrator.Expressions.IMigrationExpression"/></typeparam>
+        </member>
+        <member name="P:FluentMigrator.Builders.ExpressionBuilderBase`1.Expression">
+            <summary>
+            Gets the underlying migration expression
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderBase`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.ExpressionBuilderBase`1"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="T:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2">
+            <summary>
+            A base class for expressions that affect column types
+            </summary>
+            <remarks>
+            This class will be removed as soon as C# supports default interface methods.
+            </remarks>
+            <typeparam name="TExpression">The migration expression</typeparam>
+            <typeparam name="TNext">The next type</typeparam>
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.GetColumnForType">
+            <summary>
+            Returns the column definition to set the type for
+            </summary>
+            <returns>The column definition to set the type for</returns>
+        </member>
+        <member name="P:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.Column">
+            <summary>
+            Gets the current column definition
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsAnsiString">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsAnsiString(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsAnsiString(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsAnsiString(System.Int32,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsBinary">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsBinary(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsBoolean">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsByte">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsCurrency">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDate">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDateTime">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDateTime2">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDateTimeOffset">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDateTimeOffset(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDecimal">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDecimal(System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsDouble">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsFixedLengthString(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsFixedLengthString(System.Int32,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsFixedLengthAnsiString(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsFixedLengthAnsiString(System.Int32,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsFloat">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsGuid">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsInt16">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsInt32">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsInt64">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsString">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsString(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsString(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsString(System.Int32,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsTime">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsXml">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsXml(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.ExpressionBuilderWithColumnTypesBase`2.AsCustom(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot">
+            <summary>
+            Allows for conditional inclusion of expresions based on the migration context
+            </summary>
+        </member>
+        <member name="F:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot._context">
+            <summary>
+            The context to add expressions into
+            </summary>
+            <remarks>If the database type doe snot apply then this will be a new context that is not used by the caller</remarks>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext,System.String[])">
+            <summary>
+            Initializes a new instance of a the <see cref="T:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot"/> class that will only add expressions to the provided <paramref name="context"/> if <paramref name="databaseType"/> matches the migration processor
+            </summary>
+            <remarks>If the database type does not apply then a <seealso cref="T:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor"/> will be used as a container to void any fluent expressions that would have been executed</remarks>
+            <param name="context">The context to add expressions to if the database type applies</param>
+            <param name="databaseType">The database type that the expressions relate to</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext,System.Predicate{System.String})">
+            <summary>
+            Initializes a new instance of a the <see cref="T:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot"/> class that will only add expressions to the provided <paramref name="context"/> if <paramref name="databaseTypePredicate"/> is true for the migration processor
+            </summary>
+            <remarks>If the database type does not apply then a <seealso cref="T:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor"/> will be used as a container to void any fluent expressions that would have been executed</remarks>
+            <param name="context">The context to add expressions to if the database type applies</param>
+            <param name="databaseTypePredicate">The predicate that must be true for the expression to run</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Alter">
+            <summary>
+            Alter the schema of an existing object
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Create">
+            <summary>
+            Create a new database object
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Delete">
+            <summary>
+            Delete a database object, table, or row
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Rename">
+            <summary>
+            Rename tables / columns
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Insert">
+            <summary>
+            Insert data into a table
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Execute">
+            <summary>
+            Execute SQL statements
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Schema">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Update">
+            <summary>
+            Update an existing row
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.Delegate(System.Action)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.DatabaseTypeApplies(FluentMigrator.Infrastructure.IMigrationContext,System.String[])">
+            <summary>
+            Checks if the database type matches the name of the context migration processor
+            </summary>
+            <param name="context">The context to evaluate</param>
+            <param name="databaseTypes">The type to be checked</param>
+            <returns><c>True</c> if the database type applies, <c>False</c> if not</returns>
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.IfDatabaseExpressionRoot.DatabaseTypeApplies(FluentMigrator.Infrastructure.IMigrationContext,System.Predicate{System.String})">
+            <summary>
+            Checks if the database type matches the name of the context migration processor
+            </summary>
+            <param name="context">The context to evaluate</param>
+            <param name="databaseTypePredicate">The predicate to be evaluated</param>
+            <returns><c>True</c> if the database type applies, <c>False</c> if not</returns>
+        </member>
+        <member name="T:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor">
+            <summary>
+            Provides a null implmentation of a procesor that does not do any work
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.DatabaseType">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.DatabaseTypeAliases">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.SequenceExists(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.DefaultValueExists(System.String,System.String,System.String,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.SchemaExists(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.TableExists(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.ColumnExists(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.ConstraintExists(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.IfDatabase.NullIfDatabaseProcessor.IndexExists(System.String,System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Insert.InsertDataExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.InsertDataExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Insert.InsertDataExpressionBuilder.#ctor(FluentMigrator.Expressions.InsertDataExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Insert.InsertDataExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="P:FluentMigrator.Builders.Insert.InsertDataExpressionBuilder.AdditionalFeatures">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Insert.InsertDataExpressionBuilder.Row(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Insert.InsertDataExpressionBuilder.Row(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Insert.InsertDataExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Insert.InsertExpressionRoot">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Insert.IInsertExpressionRoot"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Insert.InsertExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Insert.InsertExpressionRoot"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Insert.InsertExpressionRoot.IntoTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Rename.Column.RenameColumnExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.RenameColumnExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Column.RenameColumnExpressionBuilder.#ctor(FluentMigrator.Expressions.RenameColumnExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Rename.Column.RenameColumnExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Column.RenameColumnExpressionBuilder.To(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Column.RenameColumnExpressionBuilder.OnTable(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Column.RenameColumnExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Rename.RenameExpressionRoot">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Rename.IRenameExpressionRoot"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.RenameExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Rename.RenameExpressionRoot"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.RenameExpressionRoot.Table(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.RenameExpressionRoot.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Rename.Table.RenameTableExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.RenameTableExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Table.RenameTableExpressionBuilder.#ctor(FluentMigrator.Expressions.RenameTableExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Rename.Table.RenameTableExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Table.RenameTableExpressionBuilder.To(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Table.RenameTableExpressionBuilder.FluentMigrator#Builders#Rename#Table#IRenameTableToOrInSchemaSyntax#InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Rename.Table.RenameTableExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Schema.Column.SchemaColumnQuery">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Schema.Column.ISchemaColumnSyntax"/> interface
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Column.SchemaColumnQuery.#ctor(System.String,System.String,System.String,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Schema.Column.SchemaColumnQuery"/> class.
+            </summary>
+            <param name="schemaName">The schema name</param>
+            <param name="tableName">The table name</param>
+            <param name="columnName">The column name</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Column.SchemaColumnQuery.Exists">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Schema.Constraint.SchemaConstraintQuery">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Schema.Constraint.ISchemaConstraintSyntax"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Constraint.SchemaConstraintQuery.#ctor(System.String,System.String,System.String,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Schema.Constraint.SchemaConstraintQuery"/> class.
+            </summary>
+            <param name="schemaName">The schema name</param>
+            <param name="tableName">The table name</param>
+            <param name="constraintName">The constraint name</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Constraint.SchemaConstraintQuery.Exists">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Schema.Index.SchemaIndexQuery">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Schema.Index.ISchemaIndexSyntax"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Index.SchemaIndexQuery.#ctor(System.String,System.String,System.String,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Schema.Index.SchemaIndexQuery"/> class.
+            </summary>
+            <param name="schemaName">The schema name</param>
+            <param name="tableName">The table name</param>
+            <param name="indexName">The index name</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Index.SchemaIndexQuery.Exists">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Schema.Schema.SchemaSchemaQuery">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Schema.Schema.ISchemaSchemaSyntax"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Schema.SchemaSchemaQuery.#ctor(FluentMigrator.Infrastructure.IMigrationContext,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Schema.Schema.SchemaSchemaQuery"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+            <param name="schemaName">The schema name</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Schema.SchemaSchemaQuery.Exists">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Schema.SchemaSchemaQuery.Table(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Schema.SchemaExpressionRoot">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Schema.ISchemaExpressionRoot"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.SchemaExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            ctorc
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.SchemaExpressionRoot.Table(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.SchemaExpressionRoot.Schema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Schema.Table.SchemaTableQuery">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Schema.Table.ISchemaTableSyntax"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Table.SchemaTableQuery.#ctor(FluentMigrator.Infrastructure.IMigrationContext,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Schema.Table.SchemaTableQuery"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+            <param name="schemaName">The schema name</param>
+            <param name="tableName">The table name</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Table.SchemaTableQuery.Exists">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Table.SchemaTableQuery.Column(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Table.SchemaTableQuery.Index(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Schema.Table.SchemaTableQuery.Constraint(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder">
+            <summary>
+            An expression builder for a <see cref="T:FluentMigrator.Expressions.UpdateDataExpression"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder.#ctor(FluentMigrator.Expressions.UpdateDataExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder.#ctor(FluentMigrator.Expressions.UpdateDataExpression,FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder"/> class.
+            </summary>
+            <param name="expression">The underlying expression</param>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder.InSchema(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder.Set(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder.Where(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateDataExpressionBuilder.AllRows">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Builders.Update.UpdateExpressionRoot">
+            <summary>
+            The implementation of the <see cref="T:FluentMigrator.Builders.Update.IUpdateExpressionRoot"/> interface.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateExpressionRoot.#ctor(FluentMigrator.Infrastructure.IMigrationContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Builders.Update.UpdateExpressionRoot"/> class.
+            </summary>
+            <param name="context">The migration context</param>
+        </member>
+        <member name="M:FluentMigrator.Builders.Update.UpdateExpressionRoot.Table(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.ForwardOnlyMigration">
+            <summary>
+            A forward-only migration
+            </summary>
+            <remarks>
+            A try to collect the <c>Down</c> expressions will result in an exception
+            </remarks>
+        </member>
+        <member name="M:FluentMigrator.ForwardOnlyMigration.Down">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Infrastructure.Extensions.ExtensionsForICustomAttributeProvider">
+            <summary>
+            Extension methods for <see cref="T:System.Reflection.ICustomAttributeProvider"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.Extensions.ExtensionsForICustomAttributeProvider.GetOneAttribute``1(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+            Get the first attribute of exactly the given type
+            </summary>
+            <typeparam name="T">The attribute type to search for</typeparam>
+            <param name="member">The <see cref="T:System.Reflection.ICustomAttributeProvider"/></param>
+            <returns>The found attribute or <c>null</c></returns>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.Extensions.ExtensionsForICustomAttributeProvider.GetOneAttribute``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
+            <summary>
+            Get the first attribute of the given type
+            </summary>
+            <typeparam name="T">The attribute type to search for</typeparam>
+            <param name="member">The <see cref="T:System.Reflection.ICustomAttributeProvider"/></param>
+            <param name="inherit"><c>true</c> when attributes derived form <typeparamref name="T"/> should be returned too</param>
+            <returns>The found attribute or <c>null</c></returns>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.Extensions.ExtensionsForICustomAttributeProvider.GetAllAttributes``1(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+            Get all attributes of exactly the given type
+            </summary>
+            <typeparam name="T">The attribute type to search for</typeparam>
+            <param name="member">The <see cref="T:System.Reflection.ICustomAttributeProvider"/></param>
+            <returns>The found attributes</returns>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.Extensions.ExtensionsForICustomAttributeProvider.GetAllAttributes``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
+            <summary>
+            Get all attributes of the given type
+            </summary>
+            <typeparam name="T">The attribute type to search for</typeparam>
+            <param name="member">The <see cref="T:System.Reflection.ICustomAttributeProvider"/></param>
+            <param name="inherit"><c>true</c> when attributes derived form <typeparamref name="T"/> should be returned too</param>
+            <returns>The found attributes</returns>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.Extensions.ExtensionsForICustomAttributeProvider.HasAttribute``1(System.Reflection.ICustomAttributeProvider)">
+            <summary>
+            Returns a value indicating whether the custom attribute provider contains the given attribute
+            </summary>
+            <typeparam name="T">The attribute type to search for</typeparam>
+            <param name="member">The <see cref="T:System.Reflection.ICustomAttributeProvider"/></param>
+            <returns><c>true</c> when an attribute with the given type could be found</returns>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.Extensions.ExtensionsForICustomAttributeProvider.HasAttribute``1(System.Reflection.ICustomAttributeProvider,System.Boolean)">
+            <summary>
+            Returns a value indicating whether the custom attribute provider contains the given attribute
+            </summary>
+            <typeparam name="T">The attribute type to search for</typeparam>
+            <param name="member">The <see cref="T:System.Reflection.ICustomAttributeProvider"/></param>
+            <param name="inherit"><c>true</c> when attributes derived form <typeparamref name="T"/> should be returned too</param>
+            <returns><c>true</c> when an attribute with the given type could be found</returns>
+        </member>
+        <member name="T:FluentMigrator.Infrastructure.Extensions.ExtensionsForIMigrationInfo">
+            <summary>
+            Extension methods for <see cref="T:FluentMigrator.Infrastructure.IMigrationInfo"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.Extensions.ExtensionsForIMigrationInfo.IsAttributed(FluentMigrator.Infrastructure.IMigrationInfo)">
+            <summary>
+            Returns <c>true</c> when the migration behind the <paramref name="migrationInfo"/> has a migration attribute
+            </summary>
+            <param name="migrationInfo">The migration information to test</param>
+            <returns><c>true</c> when the migration behind the <paramref name="migrationInfo"/> has a migration attribute</returns>
+        </member>
+        <member name="T:FluentMigrator.Infrastructure.MigrationContext">
+            <summary>
+            The default implementation of the <see cref="T:FluentMigrator.Infrastructure.IMigrationContext"/>
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.MigrationContext.#ctor(FluentMigrator.IQuerySchema,FluentMigrator.Infrastructure.IAssemblyCollection,System.Object,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Infrastructure.MigrationContext"/> class.
+            </summary>
+            <param name="querySchema">The provider used to query the database</param>
+            <param name="migrationAssemblies">The collection of migration assemblies</param>
+            <param name="context">The arbitrary application context passed to the task runner</param>
+            <param name="connection">The database connection</param>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.MigrationContext.#ctor(FluentMigrator.IQuerySchema,System.IServiceProvider,System.Object,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Infrastructure.MigrationContext"/> class.
+            </summary>
+            <param name="querySchema">The provider used to query the database</param>
+            <param name="serviceProvider">The service provider</param>
+            <param name="context">The arbitrary application context passed to the task runner</param>
+            <param name="connection">The database connection</param>
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.Expressions">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.QuerySchema">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.MigrationAssemblies">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.ApplicationContext">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.Connection">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.MigrationContext.ServiceProvider">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter">
+            <summary>
+            This adapter wraps a migration into a MigrationInfo instance, used to keep <see cref="T:FluentMigrator.IMigration"/> backwards compatible with new <see cref="T:FluentMigrator.Infrastructure.IMigrationInfo"/>.
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.#ctor(FluentMigrator.IMigration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter"/> class.
+            </summary>
+            <param name="migration">The underlying migration</param>
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.#ctor(FluentMigrator.IMigration,FluentMigrator.TransactionBehavior)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter"/> class.
+            </summary>
+            <param name="migration">The underlying migration</param>
+            <param name="transactionBehavior">The desired transaction behavior</param>
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.Description">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.Version">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.TransactionBehavior">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.Migration">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.IsBreakingChange">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.Trait(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.HasTrait(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.Infrastructure.NonAttributedMigrationToMigrationInfoAdapter.GetName">
+            <inheritdoc />
+        </member>
+        <member name="T:FluentMigrator.Migration">
+            <summary>
+            The base migration class for custom SQL queries and data updates/deletions
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Migration.Delete">
+            <summary>
+            Gets the starting point for data deletions
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Migration.Execute">
+            <summary>
+            Gets the starting point for SQL execution
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.Migration.Update">
+            <summary>
+            Gets the starting point for data updates
+            </summary>
+        </member>
+        <member name="T:FluentMigrator.MigrationBase">
+            <summary>
+            The base migration class
+            </summary>
+        </member>
+        <member name="F:FluentMigrator.MigrationBase._context">
+            <summary>
+            Gets or sets the migration context
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.ApplicationContext">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.ConnectionString">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.Context">
+            <summary>
+            Gets the migration context
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.MigrationBase.Up">
+            <summary>
+            Collect the UP migration expressions
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.MigrationBase.Down">
+            <summary>
+            Collects the DOWN migration expressions
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.MigrationBase.GetUpExpressions(FluentMigrator.Infrastructure.IMigrationContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:FluentMigrator.MigrationBase.GetDownExpressions(FluentMigrator.Infrastructure.IMigrationContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.Alter">
+            <summary>
+            Gets the starting point for alterations
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.Create">
+            <summary>
+            Gets the starting point for creating database objects
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.Rename">
+            <summary>
+            Gets the starting point for renaming database objects
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.Insert">
+            <summary>
+            Gets the starting point for data insertion
+            </summary>
+        </member>
+        <member name="P:FluentMigrator.MigrationBase.Schema">
+            <summary>
+            Gets the starting point for schema-rooted expressions
+            </summary>
+        </member>
+        <member name="M:FluentMigrator.MigrationBase.IfDatabase(System.String[])">
+            <summary>
+            Gets the starting point for database specific expressions
+            </summary>
+            <param name="databaseType">The supported database types</param>
+            <returns>The database specific expression</returns>
+        </member>
+        <member name="M:FluentMigrator.MigrationBase.IfDatabase(System.Predicate{System.String})">
+            <summary>
+            Gets the starting point for database specific expressions
+            </summary>
+            <param name="databaseTypeFunc">The lambda that tests if the expression can be applied to the current database</param>
+            <returns>The database specific expression</returns>
+        </member>
+    </members>
+</doc>

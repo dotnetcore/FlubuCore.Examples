@@ -10,11 +10,13 @@ using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Context.FluentInterface.TaskExtensions;
 using FlubuCore.Scripting;
 using FlubuCore.Tasks.Iis;
+using FluentMigrator;
 using Newtonsoft.Json;
 using RestSharp;
 
 //#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
-//#ass ./Packages/Newtonsoft.Json.9.0.1/lib/netstandard1.0/Newtonsoft.Json.dll
+//#ass ./Packages\fluentmigrator\3.1.3\lib\netstandard2.0\FluentMigrator.dll
+//#ass ./Packages\fluentmigrator\3.1.3\lib\netstandard2.0\FluentMigrator.Abstractions.dll
 //#imp ./BuildScript/BuildScriptHelper.cs
 //#nuget RestSharp, 106.3.1   
 
@@ -73,8 +75,8 @@ public class MyBuildScript : DefaultBuildScript
         var doExample2 = context.CreateTarget("DoExample2").Do(DoExample2, "SomeValue");
 
         context.CreateTarget("ReuseSetOfTargetsExample")
-            .Do(ReuseSetOfTargetsExample, "Dir1", "Dir2")
-            .Do(ReuseSetOfTargetsExample, "Dir3", "Dir4");
+            .AddTasks(ReuseSetOfTargetsExample, "Dir1", "Dir2")
+            .AddTasks(ReuseSetOfTargetsExample, "Dir3", "Dir4");
 
         context.CreateTarget("iis.install").Do(IisInstall);
         
@@ -101,9 +103,13 @@ public class MyBuildScript : DefaultBuildScript
 
         context.LogInfo(example);
 
-        //// Just an a example that external reference works.
+        //// Just an a example that referencing nuget package works.
         JsonConvert.SerializeObject(example);
         var client = new RestClient("http://example.com");
+
+        //// Just an a example that referencing by assmbly works (Fluent migrator)
+        AddLogTable logTable = new AddLogTable();
+
     }
 
     //// See deployment example for real use case. You can also apply attribute Target on method. https://github.com/flubu-core/flubu.core/wiki/2-Build-script-fundamentals#Targets
@@ -149,5 +155,21 @@ public class MyBuildScript : DefaultBuildScript
             .ApplicationPoolName("SomeAppPoolName")
             .WebsiteMode(CreateWebApplicationMode.DoNothingIfExists)
             .Execute(context);
+    }
+
+    [Migration(20180430121800)]
+    public class AddLogTable : Migration
+    {
+        public override void Up()
+        {
+            Create.Table("Log")
+                .WithColumn("Id").AsInt64().PrimaryKey().Identity()
+                .WithColumn("Text").AsString();
+        }
+
+        public override void Down()
+        {
+            Delete.Table("Log");
+        }
     }
 }
