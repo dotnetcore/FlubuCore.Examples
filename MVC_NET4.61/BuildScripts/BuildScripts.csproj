@@ -61,7 +61,7 @@
   <ItemGroup>
     <Compile Include="BuildHelper.cs" />
     <Compile Include="BuildScript.cs" />
-    <Compile Include="DeployScriptComplexRealLifeScenarioExample.cs" />
+    <Compile Include="DeployScriptComplexFromRealProjectExample.cs" />
     <Compile Include="DiffMatchPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
