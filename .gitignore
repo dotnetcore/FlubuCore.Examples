@@ -87,3 +87,8 @@ ArgumentAndConfigurationPassThroughToTasksExample/FlubuExample/FlubuExample.cspr
 MVC_NET4.61/FlubuExample/FlubuExample.csproj.user
 MVC_NET4.61/obj/
 DeployScriptExample/bin/
+UsingCakeAddinInFlubuExample/bin/
+UsingCakeAddinInFlubuExample/.vs/
+UsingCakeAddinInFlubuExample/BuildScript/bin/
+UsingCakeAddinInFlubuExample/BuildScript/obj/
+UsingCakeAddinInFlubuExample/obj/

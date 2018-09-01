@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BuildScript\bin\**" />
+    <Compile Remove="BuildScript\obj\**" />
+    <Compile Remove="UsingCakeAddinInFlubuExample\bin\**" />
+    <Compile Remove="UsingCakeAddinInFlubuExample\obj\**" />
+    <EmbeddedResource Remove="BuildScript\bin\**" />
+    <EmbeddedResource Remove="BuildScript\obj\**" />
+    <EmbeddedResource Remove="UsingCakeAddinInFlubuExample\bin\**" />
+    <EmbeddedResource Remove="UsingCakeAddinInFlubuExample\obj\**" />
+    <None Remove="BuildScript\bin\**" />
+    <None Remove="BuildScript\obj\**" />
+    <None Remove="UsingCakeAddinInFlubuExample\bin\**" />
+    <None Remove="UsingCakeAddinInFlubuExample\obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.FileHelpers" Version="3.1.0" />
+    <PackageReference Include="FlubuCore" Version="2.11.2" />
+    <PackageReference Include="FlubuCore.CakePlugin" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-flubu" Version="2.11.2" />
+  </ItemGroup>
+</Project>
