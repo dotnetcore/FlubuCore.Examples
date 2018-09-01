@@ -1,9 +1,16 @@
 # README #
 
-### Flubu example ###
+### Flubu examples ###
 
-* Example of flubu usage. Flubu is for building projects and executing deployment scripts using C# code.
-* How to test and debug build script example is in NetCore_csproj project.
+These examples will help you to get quickly start with FlubuCore:
+* [.NET Framework build example](https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScript.cs
+)
+
+* [.NET Core build example](https://github.com/flubu-core/examples/blob/master/NetCore_csproj/BuildScript/BuildScript.cs
+)
+
+* [Deployment script example](https://github.com/flubu-core/examples/blob/master/DeployScriptExample/BuildScript/DeployScript.cs
+)
 
 
 ### How do I get set up (.net 4.6)? ###
