@@ -15,7 +15,7 @@ using FlubuCore.Scripting;
 namespace UsingCakeAddinInFlubuExample
 {
    /// <summary>
-   /// Example uses Cake.FileHelpers plugin.
+   /// Example uses Cake.FileHelpers addin.
    /// This is just an example that using Cake addins works. Using this addin in real scenario would be meaningless as you could just use File.ReadAllLines() with FlubuCore.
    /// </summary>
     public class BuildScript : DefaultBuildScript
