@@ -1,27 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using System.Xml;
-using FlubuCore.Context;
+﻿using FlubuCore.Context;
 using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Context.FluentInterface.TaskExtensions;
 using FlubuCore.Scripting;
+using FlubuCore.Scripting.Attributes;
 using FlubuCore.Tasks.Iis;
 using FluentMigrator;
 using Newtonsoft.Json;
-using NuGet.Protocol;
 using RestSharp;
 
-//#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
-//#ass ./Packages\fluentmigrator\3.1.3\lib\netstandard2.0\FluentMigrator.dll
-//#ass ./Packages\fluentmigrator\3.1.3\lib\netstandard2.0\FluentMigrator.Abstractions.dll
-//#imp ./BuildScript/BuildScriptHelper.cs
-//#nuget RestSharp, 106.3.1   
-
 //// Examine build scripts in other projects for more use cases.
+[Include("./BuildScript/BuildScriptHelper.cs")]
 public class MyBuildScript : DefaultBuildScript
 {
 
@@ -89,7 +77,6 @@ public class MyBuildScript : DefaultBuildScript
 
     private void DoExample(ITaskContext context)
     {
-        XmlDocument xml = new XmlDocument(); //// Just an a example that external reference works.
         BuildScriptHelper.SomeMethod(); //// Just an a example that referencing other cs file works.
     }
 
