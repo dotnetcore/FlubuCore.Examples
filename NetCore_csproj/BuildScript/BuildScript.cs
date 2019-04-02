@@ -12,6 +12,7 @@ using FlubuCore.Scripting;
 using FlubuCore.Tasks.Iis;
 using FluentMigrator;
 using Newtonsoft.Json;
+using NuGet.Protocol;
 using RestSharp;
 
 //#ref System.Xml.XmlDocument, System.Xml.XmlDocument, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a

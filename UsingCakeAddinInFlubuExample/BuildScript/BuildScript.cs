@@ -2,12 +2,15 @@
 using Cake.Common.Build;
 using Cake.FileHelpers;
 using FlubuCore.Context;
+using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Scripting;
 
 //#nuget FlubuCore.CakePlugin, 1.0.0
 //#nuget Cake.Core, 0.30.0
 //#nuget Cake.FileHelpers, 3.1.0
 //#nuget Cake.Common, 0.30.0
+//#nuget FlubuCore.Diff, 1.0.1
+
 
 namespace UsingCakeAddinInFlubuExample
 {
@@ -30,6 +33,7 @@ namespace UsingCakeAddinInFlubuExample
         
         private void CakeAddinExample(ITaskContext context)
         {
+            context.Tasks().DiffTask("1.txt", "2.txt", "output.html").Execute(context);
             var test = context.CakeTasks().Bitrise().IsRunningOnBitrise;
             context.LogInfo($"IsRunning on bitrise: {test}");
             var lines = context.CakeTasks().FileReadLines("ExampleFile.txt");

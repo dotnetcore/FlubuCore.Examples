@@ -6,19 +6,19 @@ using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Packaging;
 using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
+using FlubuCore.Scripting.Attributes;
 using FlubuCore.Tasks.Iis;
 using Newtonsoft.Json;
 using RestSharp;
-
-//#ass .\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll
-//#nuget RestSharp, 106.3.1
-//#imp .\BuildScripts\BuildHelper.cs
 
 /// <summary>
 /// In this build script default targets(compile, generate common assembly info etc are included with  context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);///
 /// Type "build.exe help in cmd to see help
 /// Examine build scripts in other projects for more use cases.
 /// </summary>
+[Assembly(@".\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll")]
+[NugetPackage("RestSharp", "106.3.1")]
+[Include(@".\BuildScripts\BuildHelper.cs")]
 public class BuildScriptSimple : DefaultBuildScript
 {
 
