@@ -2,7 +2,7 @@
 
 ### Flubu examples ###
 
-These examples will help you to get quickly start with FlubuCore:
+These examples will help you get quickly started with FlubuCore:
 * [.NET Framework build script example](https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScript.cs
 )
 
