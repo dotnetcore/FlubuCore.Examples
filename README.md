@@ -18,10 +18,10 @@ These examples will help you get quickly started with FlubuCore:
 * Clone source code.
 * Examine build script project in MVC_NET4.61 solution especialy buildscript.cs 
 
-* In cmd run build.exe to run default build action. Build (example) will compile code, run unit tests, create iis web appilcation and package example application into zip for deployment.
+* In cmd run flubu.exe to run default build action. Build (example) will compile code, run unit tests, create iis web appilcation and package example application into zip for deployment.
 
 
-* run build.exe help to see other available build actions.
+* run flubu.exe help to see other available build actions.
 * see other examples for diferent flubu use cases.
 * see FlubuCore wiki for how to get started with flubu
 
