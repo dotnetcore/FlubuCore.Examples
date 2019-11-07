@@ -1,10 +1,12 @@
 language: csharp
 dist: xenial
+sudo: required
 dotnet: 3.0.100
 mono: none
 
 os:
   - linux
+  
 before-script: cd NetCoreOpenSource
 
 script:
