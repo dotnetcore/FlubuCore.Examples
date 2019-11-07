@@ -6,7 +6,7 @@ namespace Build
 {
     public class BuildScript : DefaultBuildScript
     {
-        [FromArg("nugetApiKey")]
+        [FromArg("apiKey")]
         public string NugetApiKey { get; set; }
         
         protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
@@ -67,6 +67,8 @@ namespace Build
                    .OutputDirectory(outputDir));
 
            var branch = context.BuildSystems().Travis().Branch;
+           
+           //// Examine travis.yaml to see how to pass api key from travis to FlubuCore build script.
            var nugetPush = context.CreateTarget("Nuget.publish")
                .SetDescription("Publishes nuget package.")
                .DependsOn(pack)
