@@ -5,8 +5,8 @@ mono: none
 
 os:
   - linux
+before-script: cd NetCoreOpenSource
 
 script:
- - cd NetCoreOpenSource
  - dotnet tool install --global FlubuCore.GlobalTool --version 4.2.8
  - flubu Rebuild.Server -apiKey=${Nuget_Api_Key}
