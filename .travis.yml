@@ -1,14 +1,25 @@
 language: csharp
-dist: xenial
-sudo: required
-dotnet: 3.0.100
-mono: none
-
 os:
   - linux
+sudo: required  
+dist: xenial
+mono: none
+dotnet: 3.0.100
+
+addons:
+  apt:
+    sources:
+    - sourceline: 'deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main'
+      key_url: 'https://packages.microsoft.com/keys/microsoft.asc'
+    packages:
+     - libunwind8
+
+git:
+  depth: false
   
 before-script: cd NetCoreOpenSource
 
 script:
- - dotnet tool install --global FlubuCore.GlobalTool --version 4.2.8
- - flubu Rebuild.Server -apiKey=${Nuget_Api_Key}
+  - export PATH="$PATH:$HOME/.dotnet/tools"
+  - dotnet tool install --global FlubuCore.GlobalTool --version 4.2.8
+  - flubu build -s=build/BuildScript.cs
