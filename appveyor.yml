@@ -2,16 +2,10 @@ image:
 - Ubuntu1804
 
 clone_depth: 50
-
-for:
--
-  matrix:
-    only:
-      - image: Ubuntu1804
     
-  before_build:
+before_build:
   - sh: dotnet tool install --global FlubuCore.GlobalTool --version 4.2.8
   
-  build_script:
+build_script:
   - sh: cd NetCoreOpenSource
   - sh: flubu
