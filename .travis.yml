@@ -13,4 +13,4 @@ script:
   - export PATH="$PATH:$HOME/.dotnet/tools"
   - dotnet tool install --global FlubuCore.GlobalTool --version 4.2.8
   - cd NetCoreOpenSource
-  - flubu build -s=build/BuildScript.cs
+  - flubu
