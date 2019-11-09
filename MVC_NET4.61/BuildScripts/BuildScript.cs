@@ -35,6 +35,7 @@ public class BuildScriptSimple : DefaultBuildScript
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
         context.Properties.Set(BuildProps.BuildConfiguration, "Release");
         //// Remove SetDefaultTarget's if u dont't want default targets to be included or if you want to define them by yourself.
+		//// Included default target's: clean output(bin, obj), fetch build version from file, generate common assembly info, compile.
         context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
     }
 
@@ -56,7 +57,7 @@ public class BuildScriptSimple : DefaultBuildScript
         session.CreateTarget("Rebuild")
             .SetDescription("Rebuilds the solution.")
             .SetAsDefault()
-            .DependsOn("compile") //// compile is included as one of the default targets.
+            .DependsOn("compile") //// compile is included as one of the default targets which also depends on .
             .DependsOn(unitTest, package);
 
         //// Below are dummy examples of what flubu can do.
@@ -123,6 +124,7 @@ public class BuildScriptSimple : DefaultBuildScript
 
     public static void TargetFetchBuildVersion(ITaskContext context)
     {
+		//// task fetches version from FlubuExample.ProjectVersion.txt file. File name can be changed with fluent method  .ProjectVersionFileName() on task.
         var version = context.Tasks().FetchBuildVersionFromFileTask().Execute(context);
      
         int svnRevisionNumber = 0; //in real scenario you would fetch revision number from subversion.

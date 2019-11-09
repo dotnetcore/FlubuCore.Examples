@@ -19,28 +19,34 @@ public class MyBuildScript : DefaultBuildScript
 
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
     {
-        context.Properties.Set(BuildProps.CompanyName, "Flubu");
-        context.Properties.Set(BuildProps.CompanyCopyright, "Copyright (C) 2010-2016 Flubu");
         context.Properties.Set(BuildProps.ProductId, "FlubuExample");
-        context.Properties.Set(BuildProps.ProductName, "FlubuExample");
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
-		context.Properties.Set(BuildProps.BuildConfiguration, "Release");
+        context.Properties.Set(BuildProps.BuildConfiguration, "Release");
     }
 
     protected override void ConfigureTargets(ITaskContext context)
     {
+        ////  Target fetches build version from FlubuExample.ProjectVersion.txt build version is stored
+        ////  in flubu session. In script it can be accesses through context.Properties.Get<Version>(BuildProps.BuildVersion);
+        //// Alternatively flubu supports fetching of build version out of the box with GitVersionTask.
         var buildVersion = context.CreateTarget("buildVersion")
             .SetAsHidden()
             .SetDescription("Fetches flubu version from FlubuExample.ProjectVersion.txt file.")
             .AddTask(x => x.FetchBuildVersionFromFileTask());
+            ////.ProjectVersionFileName("Changelog.md") ////Explicitly set file from where to fetch project version.
 
         var compile = context
             .CreateTarget("compile")
             .SetDescription("Compiles the VS solution and sets version to FlubuExample.csproj")
-            .AddCoreTask(x => x.UpdateNetCoreVersionTask("FlubuExample/FlubuExample.csproj"))
+            .AddCoreTask(x => x.UpdateNetCoreVersionTask("FlubuExample/FlubuExample.csproj")) //// Task get's version from context.Properties.Get<Version>(BuildProps.BuildVersion) and updates version in csproj
             .AddCoreTask(x => x.Restore())
             .AddCoreTask(x => x.Build())
             .DependsOn(buildVersion);
+
+        ///// Tasks are runned in parallel. You can do the same with DoAsync and DependsOnAsync and you can also mix Async and Sync tasks
+        var test = context.CreateTarget("test")
+            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests"))
+            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests2"));
 
         var package = context
             .CreateTarget("Package")
@@ -49,11 +55,6 @@ public class MyBuildScript : DefaultBuildScript
 
         //// Can be used instead of CreateZipPackageFromProject. See MVC_NET4.61 project for full example of PackageTask
         //// context.CreateTarget("Package2").AddTask(x => x.PackageTask("FlubuExample"));
-
-        ///// Tasks are runned in parallel. You can do the same with DoAsync and DependsOnAsync and you can also mix Async and Sync tasks
-        var test = context.CreateTarget("test")
-            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests"))
-            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests2"));
 
         var runExternalProgramExample = context.CreateTarget("run.libz")
             .AddTask(x => x.RunProgramTask(@"packages\LibZ.Tool\1.2.0\tools\libz.exe"));
@@ -68,7 +69,7 @@ public class MyBuildScript : DefaultBuildScript
             .AddTasks(ReuseSetOfTargetsExample, "Dir3", "Dir4");
 
         context.CreateTarget("iis.install").Do(IisInstall);
-        
+
         context.CreateTarget("Rebuild")
             .SetAsDefault()
             .DependsOnAsync(doExample, doExample2)
