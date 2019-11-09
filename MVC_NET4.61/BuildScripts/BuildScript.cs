@@ -36,6 +36,7 @@ public class BuildScriptSimple : DefaultBuildScript
         context.Properties.Set(BuildProps.BuildConfiguration, "Release");
         //// Remove SetDefaultTarget's if u dont't want default targets to be included or if you want to define them by yourself.
 		//// Included default target's: clean output(bin, obj), fetch build version from file, generate common assembly info, compile.
+		//// compile target depend's on clean output, fetch build version from file and generate common assembly info.
         context.Properties.SetDefaultTargets(DefaultTargets.Dotnet);
     }
 
