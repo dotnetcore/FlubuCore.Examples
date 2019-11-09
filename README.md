@@ -12,6 +12,7 @@ These examples will help you to get quickly start with FlubuCore:
 * [Deployment script example](https://github.com/flubu-core/examples/blob/master/DeployScriptExample/BuildScript/DeployScript.cs
 ) - Example shows how to write simple deployment script. 
 
+* [Open source library example](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/NetCoreOpenSource/Build/BuildScript.cs) - Example covers versioning, building the project, running tests and publishing nuget package.
 
 ### How do I get set up (.net 4.6)? ###
 
