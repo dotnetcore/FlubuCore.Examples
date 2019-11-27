@@ -2,16 +2,17 @@
 
 ### Flubu examples ###
 
-These examples will help you get quickly started with FlubuCore:
-* [.NET Framework build script example](https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScript.cs
-)
+These examples will help you to get quickly start with FlubuCore:
+* [.NET Framework build example](https://github.com/flubu-core/examples/blob/master/MVC_NET4.61/BuildScripts/BuildScript.cs
+) - Example covers versioning, building the project, running tests, packaging application for deployment.
 
-* [.NET Core build script example](https://github.com/flubu-core/examples/blob/master/NetCore_csproj/BuildScript/BuildScript.cs
-)
+* [.NET Core build example](https://github.com/flubu-core/examples/blob/master/NetCore_csproj/BuildScript/BuildScript.cs
+) - Example covers versioning, building the project, running tests, packaging application for deployment.
 
 * [Deployment script example](https://github.com/flubu-core/examples/blob/master/DeployScriptExample/BuildScript/DeployScript.cs
-)
+) - Example shows how to write simple deployment script. 
 
+* [Open source library example](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/NetCoreOpenSource/Build/BuildScript.cs) - Example covers versioning, building the project, running tests and publishing nuget package.
 
 ### How do I get set up (.net 4.6)? ###
 
