@@ -4,9 +4,13 @@ using System.IO;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BuildScript.BuildScript
 {
+    /// <summary>
+    /// See FlubuExample.Tests BuildScriptTests.cs
+    /// </summary>
     public class BuildScriptForTestsAndDebugExample : DefaultBuildScript
     {
         protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
@@ -23,7 +27,9 @@ namespace BuildScript.BuildScript
 
         public void CreateFile(ITaskContext context)
         {
-            File.Create("test123.txt");
+           using(File.Create("test123.txt"))
+           {
+           }
         } 
     }
 }

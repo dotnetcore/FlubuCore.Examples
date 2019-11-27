@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlubuExample", "FlubuExample\FlubuExample.csproj", "{B073DE1D-453F-4437-9003-20A8DD3AD455}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlubuExample", "FlubuExample\FlubuExample.csproj", "{B073DE1D-453F-4437-9003-20A8DD3AD455}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildScript", "BuildScript.csproj", "{13796F1A-ABA3-40CB-874F-11238F37BCC5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlubuExample.Tests", "FlubuExample.Tests\FlubuExample.Tests.csproj", "{AB097716-56D5-4B88-80D6-7A0F999FEA26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlubuExample.Tests2", "FlubuExample.Tests2\FlubuExample.Tests2.csproj", "{B4C0065E-C886-41B0-97C5-C18B048BCDB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlubuExample2.Tests", "FlubuExample2.Tests\FlubuExample2.Tests.csproj", "{B4C0065E-C886-41B0-97C5-C18B048BCDB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,5 +72,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AB1BDE1-4805-4C24-A80B-175ABB849E21}
 	EndGlobalSection
 EndGlobal

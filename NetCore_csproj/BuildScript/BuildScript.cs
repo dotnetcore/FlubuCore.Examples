@@ -8,7 +8,7 @@ using FluentMigrator;
 using Newtonsoft.Json;
 using RestSharp;
 
-//// Examine build scripts in other projects for more use cases.
+
 [Include("./BuildScript/BuildScriptHelper.cs")]
 public class MyBuildScript : DefaultBuildScript
 {
@@ -20,7 +20,9 @@ public class MyBuildScript : DefaultBuildScript
     protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
     {
         context.Properties.Set(BuildProps.ProductId, "FlubuExample");
+        //// Solution is stored in flubu session so it doesn't need to be defined in restore and build task.
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
+        //// BuildConfiguration is stored in flubu session so it doesn't need to be defined in build task and test tasks.
         context.Properties.Set(BuildProps.BuildConfiguration, "Release");
     }
 
@@ -47,6 +49,18 @@ public class MyBuildScript : DefaultBuildScript
         var test = context.CreateTarget("test")
             .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests"))
             .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests2"));
+
+
+        var vsSolution = context.GetVsSolution();
+        var testProjects = vsSolution.FilterProjects("*.Tests");
+
+        var testAlternative = context.CreateTarget("test.alternative")
+            .ForEach(testProjects,
+                (project, target) =>
+                {
+                    target.AddCoreTask(x => x.Test().Project(project.ProjectName));
+                });
+            
 
         var package = context
             .CreateTarget("Package")
@@ -119,6 +133,10 @@ public class MyBuildScript : DefaultBuildScript
                 onFinally: c =>
                 {
                     c.LogInfo("Dummy example of OnFinally and When on group of tasks.");
+                },
+                onError: (c, ex) =>
+                {
+                    c.LogInfo("Dummy example of OnError on group of tasks.");
                 },
                 when: c => true
             );

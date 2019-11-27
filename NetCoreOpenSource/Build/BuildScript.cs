@@ -26,7 +26,7 @@ namespace Build
             var clean = context.CreateTarget("Clean")
                 .SetDescription("Clean's the solution.")
                 .AddCoreTask(x => x.Clean()
-                    .AddDirectoryToClean("output", true));
+                    .AddDirectoryToClean(OutputDirectory, true));
 
             var restore = context.CreateTarget("Restore")
                 .SetDescription("Restore's nuget packages in all projects.")
@@ -58,21 +58,20 @@ namespace Build
                 .AddCoreTask(x => x.Test()
                     .Project("NetCoreOpenSource.Tests")
                     .NoBuild());
-
-           var outputDir = context.Properties.GetOutputDir();
+       
            var pack = context.CreateTarget("Pack")
                .SetDescription("Prepare's nuget package.")
                .AddCoreTask(x => x.Pack()
                    .NoBuild()
-                   .OutputDirectory(outputDir));
+                   .OutputDirectory(OutputDirectory));
 
            var branch = context.BuildSystems().Travis().Branch;
-           
+
            //// Examine travis.yaml to see how to pass api key from travis to FlubuCore build script.
            var nugetPush = context.CreateTarget("Nuget.publish")
                .SetDescription("Publishes nuget package.")
                .DependsOn(pack)
-               .AddCoreTask(x => x.NugetPush($"{outputDir}/NetCoreOpenSource.nupkg")
+               .AddCoreTask(x => x.NugetPush($"{OutputDirectory}/NetCoreOpenSource.nupkg")
                    .ApiKey(NugetApiKey)
                )
                .When((c) => c.BuildSystems().RunningOn == BuildSystemType.TravisCI

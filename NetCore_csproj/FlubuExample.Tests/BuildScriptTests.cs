@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using FlubuCore.Scripting;
 using FlubuCore.Tasks.Solution;
 using Xunit;
@@ -41,7 +42,7 @@ namespace BuildScript.BuildScript
 
         [Fact]
         //// You can just test your code in do (Custom code)
-        public void TestDoExample()
+        public void TestBuildScriptMethodExample()
         {
             if (File.Exists("test123.txt"))
             {
@@ -53,10 +54,11 @@ namespace BuildScript.BuildScript
             IFlubuEngine engine = new FlubuEngine();
 
             var session = engine.CreateTaskSession(new BuildScriptArguments());
+            bs.CreateFile(session);
             Assert.True(File.Exists("test123.txt"));
         }
 
-        [Fact]
+        [Fact(Skip = "Just an example")]
         public void HowToUseTaskInOtherNetApplication()
         {
             //// 

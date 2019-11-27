@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 
 /// <summary>
 /// Flubu loads Newtonsoft.json and FlubuCore.PluginExample assembly from FlubuLib directory
-/// If you dont put them into FlubuLib directory you can also refernce them with #ass or #nuget directive. See wiki - BuildScript fundamentals for more information.
 /// </summary>
 public class BuildScript : DefaultBuildScript
 {
@@ -30,7 +29,6 @@ public class BuildScript : DefaultBuildScript
 
     private void DoPluginExample(ITaskContext context)
     {
-        //// just example that JsonConver works(Newtonsoft.json assembly got loaded from FlubuLib directory)
         JsonConvert.SerializeObject("test");
 
         //// Execution of custom written flubu task in FlubuCore.PluginExample assembly.
