@@ -72,6 +72,7 @@ namespace Build
                .SetDescription("Publishes nuget package.")
                .DependsOn(pack)
                .AddCoreTask(x => x.NugetPush($"{OutputDirectory}/NetCoreOpenSource.nupkg")
+                   .ServerUrl("https://www.nuget.org/api/v2/package")
                    .ApiKey(NugetApiKey)
                )
                .When((c) => c.BuildSystems().RunningOn == BuildSystemType.TravisCI
