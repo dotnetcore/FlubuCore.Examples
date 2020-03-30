@@ -1,9 +1,13 @@
 ﻿using FlubuCore.Context;
+using FlubuCore.Context.Attributes.BuildProperties;
 using FlubuCore.Context.FluentInterface.Interfaces;
 using FlubuCore.Context.FluentInterface.TaskExtensions;
+using FlubuCore.IO;
 using FlubuCore.Scripting;
 using FlubuCore.Scripting.Attributes;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Iis;
+using FlubuCore.Tasks.Versioning;
 using FluentMigrator;
 using Newtonsoft.Json;
 using RestSharp;
@@ -17,39 +21,47 @@ public class MyBuildScript : DefaultBuildScript
     [FromArg("ex", "Just an example." )]
     public string PassArgumentExample { get; set; }
 
-    protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
-    {
-        context.Properties.Set(BuildProps.ProductId, "FlubuExample");
-        //// Solution is stored in flubu session so it doesn't need to be defined in restore and build task.
-        context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
-        //// BuildConfiguration is stored in flubu session so it doesn't need to be defined in build task and test tasks.
-        context.Properties.Set(BuildProps.BuildConfiguration, "Release");
-    }
+    //// With attribute solution is stored in flubu session so it doesn't need to be defined in restore and build task.
+    [SolutionFileName] public string SolutionFileName { get; set; } = "FlubuExample.sln";
+
+    //// BuildConfiguration is stored in flubu session so it doesn't need to be defined in build task and test tasks.
+    [BuildConfiguration] public string BuildConfiguration { get; set; } = "Release";
+
+    [ProductId] public string ProductId { get; set; } = "FlubuExample";
+
+    public FullPath OutputDir => RootDirectory.CombineWith("output");
+
+    //// Target fetches build version from FlubuExample.ProjectVersion.txt build version is stored. You can also explicitly set file name in attribute.
+    //// Alternatively flubu supports fetching of build version out of the box with GitVersionTask. Just apply [GitVersion] attribute on property.
+    [FetchBuildVersionFromFile(AllowSuffix = true)]
+    public BuildVersion BuildVersion { get; set; }
 
     protected override void ConfigureTargets(ITaskContext context)
     {
-        ////  Target fetches build version from FlubuExample.ProjectVersion.txt build version is stored
-        ////  in flubu session. In script it can be accesses through context.Properties.Get<Version>(BuildProps.BuildVersion);
-        //// Alternatively flubu supports fetching of build version out of the box with GitVersionTask.
-        var buildVersion = context.CreateTarget("buildVersion")
-            .SetAsHidden()
-            .SetDescription("Fetches flubu version from FlubuExample.ProjectVersion.txt file.")
-            .AddTask(x => x.FetchBuildVersionFromFileTask());
-            ////.ProjectVersionFileName("Changelog.md") ////Explicitly set file from where to fetch project version.
+        //// Alternative to [FetchBuildVersionFromFile] attribute
+        ////var buildVersion = context.CreateTarget("buildVersion")
+        ////    .SetAsHidden()
+        ////    .SetDescription("Fetches flubu version from FlubuExample.ProjectVersion.txt file.")
+        ////    .AddTask(x => x.FetchBuildVersionFromFileTask());
+        ////.ProjectVersionFileName("Changelog.md") ////Explicitly set file from where to fetch project version.
+
+        var clean = context.CreateTarget("Clean")
+            .SetDescription("Clean's the solution.")
+            .AddCoreTask(x => x.Clean()
+                .AddDirectoryToClean(OutputDir, true));
 
         var compile = context
             .CreateTarget("compile")
             .SetDescription("Compiles the VS solution and sets version to FlubuExample.csproj")
-            .AddCoreTask(x => x.UpdateNetCoreVersionTask("FlubuExample/FlubuExample.csproj")) //// Task get's version from context.Properties.Get<Version>(BuildProps.BuildVersion) and updates version in csproj
+            .DependsOn(clean)
             .AddCoreTask(x => x.Restore())
-            .AddCoreTask(x => x.Build())
-            .DependsOn(buildVersion);
+            .AddCoreTask(x => x.Build()
+                .Version(BuildVersion.Version.ToString()));               
 
         ///// Tasks are runned in parallel. You can do the same with DoAsync and DependsOnAsync and you can also mix Async and Sync tasks
         var test = context.CreateTarget("test")
             .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests"))
-            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample.Tests2"));
-
+            .AddCoreTaskAsync(x => x.Test().Project("FlubuExample2.Tests"));
 
         var vsSolution = context.GetVsSolution();
         var testProjects = vsSolution.FilterProjects("*.Tests");

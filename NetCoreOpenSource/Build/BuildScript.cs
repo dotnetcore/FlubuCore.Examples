@@ -1,6 +1,10 @@
 ﻿using System;
 using FlubuCore.Context;
+using FlubuCore.Context.Attributes.BuildProperties;
+using FlubuCore.IO;
 using FlubuCore.Scripting;
+using FlubuCore.Tasks.Attributes;
+using FlubuCore.Tasks.Versioning;
 
 namespace Build
 {
@@ -8,49 +12,43 @@ namespace Build
     {
         [FromArg("apiKey")]
         public string NugetApiKey { get; set; }
-        
-        protected override void ConfigureBuildProperties(IBuildPropertiesContext context)
-        {
-            context.Properties.Set(BuildProps.ProductId, "NetCoreOpenSourceFlubuExample");
-            
-            //// Solution is stored in flubu session so it doesn't need to be defined in restore and build task.
-            context.Properties.Set(BuildProps.Solution, "NetCoreOpenSource.sln");
-            
-            //// Solution is stored in flubu session so it doesn't need to be defined in build, test and pack task.
-            context.Properties.Set(BuildProps.BuildConfiguration, "Release");
-            context.Properties.Set(BuildProps.BuildVersion, "Output");
-        }
+
+        //// With attribute solution is stored in flubu session so it doesn't need to be defined in restore and build task.
+        [SolutionFileName] public string SolutionFileName { get; set; } = "NetCoreOpenSource.sln";
+
+        //// BuildConfiguration is stored in flubu session so it doesn't need to be defined in build task and test tasks.
+        [BuildConfiguration] public string BuildConfiguration { get; set; } = "Release";
+
+        [ProductId] public string ProductId { get; set; } = "NetCoreOpenSourceFlubuExample";
+
+        //// Target fetches build version from changelog.md files ignoring both prefixes if they occur before build version. Build Version is also stored
+        ////  in flubu session. Alternatively flubu supports fetching of build version out of the box with GitVersionTask. Just apply [GitVersion] attribute on property
+        [FetchBuildVersionFromFile(ProjectVersionFileName = "Changelog.md", PrefixesToRemove = new [] { "## NetCoreOpenSource" })]
+        public BuildVersion BuildVersion { get; set; }
+
+        public FullPath OutputDir => RootDirectory.CombineWith("output");
 
         protected override void ConfigureTargets(ITaskContext context)
         {
             var clean = context.CreateTarget("Clean")
                 .SetDescription("Clean's the solution.")
                 .AddCoreTask(x => x.Clean()
-                    .AddDirectoryToClean(OutputDirectory, true));
+                    .AddDirectoryToClean(OutputDir, true));
 
             var restore = context.CreateTarget("Restore")
                 .SetDescription("Restore's nuget packages in all projects.")
                 .AddCoreTask(x => x.Restore());
 
-            //// Target fetches build version from changelog.md files ignoring both prefixes if they occur before build version. Build Version is stored
-            ////  in flubu session. In script it can be accesses through context.Properties.Get<Version>(BuildProps.BuildVersion);
-            //// Alternatively flubu supports fetching of build version out of the box with GitVersionTask.
-            var fetchBuildVersion = context.CreateTarget("fetch.buildVersion")
-                .SetAsHidden()
-                .SetDescription("Fetches build version from Changelog.md file.")
-                .AddTask(x => x.FetchBuildVersionFromFileTask()
-                    .ProjectVersionFileName("Changelog.md")
-                    .RemovePrefix("## NetCoreOpenSource ")
-                    .RemovePrefix("## NetCoreOpenSource"));
             
             //// UpdateNetCoreVersionTask updates NetCoreOpenSource project version. Version is fetched from flubu session.
             //// Alternatively you can set version in Build task through build task fluent interface.
             var build = context.CreateTarget("Build")
                 .SetDescription("Build's the solution.")
                 .DependsOn(clean)
-                .DependsOnAsync(restore, fetchBuildVersion)
+                .DependsOnAsync(restore)
                 .AddCoreTask(x => x.UpdateNetCoreVersionTask("NetCoreOpenSource/NetCoreOpenSource.csproj"))
-                .AddCoreTask(x => x.Build());
+                .AddCoreTask(x => x.Build()
+                    .Version(BuildVersion.Version.ToString()));
                   
 
            var tests = context.CreateTarget("Run.tests")
@@ -63,15 +61,15 @@ namespace Build
                .SetDescription("Prepare's nuget package.")
                .AddCoreTask(x => x.Pack()
                    .NoBuild()
-                   .OutputDirectory(OutputDirectory));
+                   .OutputDirectory(OutputDir));
 
-           var branch = context.BuildSystems().Travis().Branch;
+           var branch = context.BuildSystems().Travis().BranchName;
 
            //// Examine travis.yaml to see how to pass api key from travis to FlubuCore build script.
            var nugetPush = context.CreateTarget("Nuget.publish")
                .SetDescription("Publishes nuget package.")
                .DependsOn(pack)
-               .AddCoreTask(x => x.NugetPush($"{OutputDirectory}/NetCoreOpenSource.nupkg")
+               .AddCoreTask(x => x.NugetPush($"{OutputDir}/NetCoreOpenSource.nupkg")
                    .ApiKey(NugetApiKey)
                )
                .When((c) => c.BuildSystems().RunningOn == BuildSystemType.TravisCI
