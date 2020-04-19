@@ -8,6 +8,7 @@ using FlubuCore.Packaging.Filters;
 using FlubuCore.Scripting;
 using FlubuCore.Scripting.Attributes;
 using FlubuCore.Tasks.Iis;
+using FlubuCore.Tasks.Testing;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -31,7 +32,7 @@ public class BuildScriptSimple : DefaultBuildScript
         context.Properties.Set(BuildProps.NUnitConsolePath,
             @"packages\NUnit.ConsoleRunner.3.6.0\tools\nunit3-console.exe");
         context.Properties.Set(BuildProps.ProductId, "FlubuExample");
-        context.Properties.Set(BuildProps.ProductName, "FlubuExample");
+        context.Properties.Set(DotNetBuildProps.ProductName, "FlubuExample");
         context.Properties.Set(BuildProps.SolutionFileName, "FlubuExample.sln");
         context.Properties.Set(BuildProps.BuildConfiguration, "Release");
         //// Remove SetDefaultTarget's if u dont't want default targets to be included or if you want to define them by yourself.
@@ -48,7 +49,7 @@ public class BuildScriptSimple : DefaultBuildScript
 
         var unitTest = session.CreateTarget("unit.tests")
             .SetDescription("Runs unit tests")
-            .AddTask(x => x.NUnitTaskForNunitV3("FlubuExample.Tests"))
+            .AddTask(x => x.NUnitTask(NunitCmdOptions.V3, "FlubuExample.Tests"))
             .DependsOn("load.solution");
 
         var package = session.CreateTarget("Package")
@@ -130,7 +131,7 @@ public class BuildScriptSimple : DefaultBuildScript
      
         int svnRevisionNumber = 0; //in real scenario you would fetch revision number from subversion.
         int buildNumber = 0; // in real scenario you would fetch build version from build server.
-        version = new Version(version.Major, version.Minor, buildNumber, svnRevisionNumber);
+        version.Version = new Version(version.Version.Major, version.Version.Minor, buildNumber, svnRevisionNumber);
         context.Properties.Set(BuildProps.BuildVersion, version);
     }
 

@@ -33,13 +33,13 @@
     <None Remove="FlubuExample.v12.suo" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FlubuCore" Version="5.0.2" />
+    <PackageReference Include="FlubuCore" Version="5.1.1" />
     <PackageReference Include="FluentMigrator" Version="3.1.3" />  
     <PackageReference Include="RestSharp" Version="106.3.1" />
  
   </ItemGroup>
     <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-flubu" Version="5.0.2" />
+    <DotNetCliToolReference Include="dotnet-flubu" Version="5.1.1" />
   </ItemGroup>
     <ItemGroup>
       <Reference Include="xunit.assert">

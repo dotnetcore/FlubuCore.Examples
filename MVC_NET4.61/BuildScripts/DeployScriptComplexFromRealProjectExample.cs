@@ -63,27 +63,27 @@ namespace BuildScript
             //  var deleteN2Tables = session.CreateTarget("Delete.N2Tables").Do(DeleteN2Tables);
 
             session.CreateTarget("deployTest")
-                .Do(Deploy, @"C:\Web\App", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
+                .AddTasks(Deploy, @"C:\Web\App", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
                     "web_AppPool", "Test", true, TestDbConnectionString);
 
             session.CreateTarget("deployTest2")
-                .Do(Deploy, @"C:\\WebApp", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
+                .AddTasks(Deploy, @"C:\\WebApp", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
                     "web_AppPool", "Test", false, TestDbConnectionString);
 
             session.CreateTarget("deployPreproduction")
-                .Do(Deploy, @"C:\WebAppP", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
+                .AddTasks(Deploy, @"C:\WebAppP", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
                     "web_AppPool_Preprod", "Preproduction", true, ProdDbConnectionString);
 
             session.CreateTarget("deployPreProduction2")
-                .Do(Deploy, @"C:\WebP", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
+                .AddTasks(Deploy, @"C:\WebP", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
                     "web_AppPool_preprod", "Preproduction", false, ProdDbConnectionString);
 
             session.CreateTarget("deployProduction")
-                .Do(Deploy, @"C:\Web", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
+                .AddTasks(Deploy, @"C:\Web", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
                     "web_AppPool", "Production", true, ProdDbConnectionString);
 
             session.CreateTarget("deployProduction2")
-                .Do(Deploy, @"C:WebApp\", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
+                .AddTasks(Deploy, @"C:WebApp\", $"C:\\WebApp\\Backup\\web_{DateTime.Now:yyyy-M-dd--HH-mm-ss}.zip",
                     "web_AppPool", "Production", false, ProdDbConnectionString);
         }
 
