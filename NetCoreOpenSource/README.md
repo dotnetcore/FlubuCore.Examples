@@ -12,7 +12,7 @@ It covers most common build steps that are needed in an open source project: Fet
 ### Running script locally
 
 - .net core sdk 2.1 or greater is required
-- Install FlubuCore global tool with command: 'dotnet tool install --global FlubuCore.GlobalTool --version 4.2.8'
+- Install FlubuCore global tool with command: 'dotnet tool install --global FlubuCore.GlobalTool'
 - run 'Flubu Rebuild' in the folder where NetCoreOpenSource.sln is located.
 
 For .net core 2.0 and lower use FlubuCore cli tool instead of FlubuCore global tool.
