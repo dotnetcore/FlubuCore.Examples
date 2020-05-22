@@ -6,6 +6,8 @@ It covers most common build steps that are needed in an open source project: Fet
 
 - [Travis configuration file](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/.travis.yml) Travis build sample also includes publishing of nuget package. 
 - [AppVeyor configuration file](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/appveyor.yml)
+- [Github Actions](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/.github/workflows/build.yml)
+- [Azure DevOps](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/azure-pipelines.yml)
 
 ### Running script locally
 
