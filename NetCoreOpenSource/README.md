@@ -2,7 +2,10 @@
 
 This is a simple example of a build script with FlubuCore for a .NET Core open source project. Build script can be also used as a template.
 
-It covers most common build steps that are needed in an open source project: Fetching build version from a file or using GitVersion, updating projects version,  building projects in the solution, running tests, packing and publishing a nuget package. It also covers how to run build script in Appveyor and Travis CI.   
+It covers most common build steps that are needed in an open source project: Fetching build version from a file or using GitVersion, updating projects version,  building projects in the solution, running tests, packing and publishing a nuget package. It also covers how to setup build in Appveyor, Travis CI, Github Actions and Azure devops. 
+
+- [Travis configuration file](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/.travis.yml) Travis build sample also includes publishing of nuget package. 
+- [AppVeyor configuration file](https://github.com/dotnetcore/FlubuCore.Examples/blob/master/appveyor.yml)
 
 ### Running script locally
 
