@@ -18,7 +18,7 @@ jobs:
     workingDirectory: NetCoreOpenSource
 
   - script: flubu pack
-    displayName: Tests
+    displayName: Pack 
     workingDirectory: NetCoreOpenSource
 
 - job: Ubuntu
@@ -60,6 +60,6 @@ jobs:
     displayName: Compile
     workingDirectory: NetCoreOpenSource
 
-  - script: flubu tests
+  - script: flubu Run.Tests
     displayName: Tests
     workingDirectory: NetCoreOpenSource
