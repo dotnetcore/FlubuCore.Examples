@@ -1,0 +1,29 @@
+name: Build
+
+on: [push, pull_request]
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false  
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.201
+    - name: Install dependencies     
+      run: dotnet tool install --global FlubuCore.GlobalTool --version 5.1.8
+    - name: Build
+      working-directory: ./NetCoreOpenSource #Better approach than setting working folder each time is to create .flubu file.
+      run: flubu Build
+    - name: Test
+      working-directory: ./NetCoreOpenSource
+      run: flubu Run.Tests
+    - name: Pack
+      working-directory: ./NetCoreOpenSource
+      run: flubu Pack
