@@ -107,3 +107,13 @@ NetCoreOpenSource/.vs/NetCoreOpenSource/v16/
 NetCoreOpenSource/Build/bin/
 NetCoreOpenSource/.vs/
 MVC_NET4.61/UpgradeLog2.htm
+WindowsServiceDeployScriptExample/.vs/
+WindowsServiceDeployScriptExample/BuildScript/bin/
+WindowsServiceDeployScriptExample/BuildScript/obj/
+WindowsServiceDeployScriptExample/WindowsService.Tests/bin/
+WindowsServiceDeployScriptExample/WindowsService.Tests/obj/
+WindowsServiceDeployScriptExample/WindowsService/bin/
+WindowsServiceDeployScriptExample/WindowsService/obj/
+WindowsServiceDeployScriptExample/output/
+WindowsServiceDeployScriptExample/deploy/
+NetCore_csproj/BuildScript/bin/
