@@ -31,7 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FlubuCore" Version="2.3.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
     <ItemGroup>
     <DotNetCliToolReference Include="dotnet-flubu" Version="2.3.2" />
